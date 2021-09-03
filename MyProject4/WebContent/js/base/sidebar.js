@@ -19,7 +19,7 @@ sideBarHideBtn.addEventListener('click', function() {
 			sideBar.classList.remove('md:slideInLeft');
 			sideBar.classList.add('md:slideOutLeft');
 
-			setTimeout(function() {
+			setTimeout(() => {
 				sideBar.classList.replace('md:ml-0', 'md:-ml-64');
 			}, 300);
 		};

@@ -7,14 +7,13 @@ import com.sist.controller.Controller;
 import com.sist.controller.RequestMapping;
 
 @Controller
-public class Model {
+public class MainModel {
 
 	@RequestMapping("main.do")
 	public String main(HttpServletRequest request, HttpServletResponse response) {
-
 		String type = request.getParameter("type");
 		int idx = 0;
-		if(type != null) {
+		if (type != null) {
 			idx = Integer.parseInt(type);
 		}
 		switch (idx) {
@@ -40,50 +39,58 @@ public class Model {
 			request.setAttribute("uri", "index.jsp");
 			break;
 		}
-		
-		return "/WEB-INF/views/main.jsp";
+
+		return "/views/main.jsp";
 	}
-/*
+
+	/*
 	@RequestMapping("index.do")
 	public String index(HttpServletRequest request, HttpServletResponse response) {
+		request.setAttribute("uri", "index.jsp");
 
-		return "/WEB-INF/views/index.jsp";
+		return "/views/main.jsp";
 	}
 
 	@RequestMapping("index-1.do")
 	public String index_1(HttpServletRequest request, HttpServletResponse response) {
+		request.setAttribute("uri", "index-1.jsp");
 
-		return "/WEB-INF/views/index-1.jsp";
+		return "/views/main.jsp";
 	}
 
 	@RequestMapping("email.do")
 	public String email(HttpServletRequest request, HttpServletResponse response) {
+		request.setAttribute("uri", "index-1.jsp");
 
-		return "/WEB-INF/views/email.jsp";
+		return "/views/main.jsp";
 	}
 
 	@RequestMapping("typography.do")
 	public String typography(HttpServletRequest request, HttpServletResponse response) {
+		request.setAttribute("uri", "typography.jsp");
 
-		return "/WEB-INF/views/typography.jsp";
+		return "/views/main.jsp";
 	}
 
 	@RequestMapping("alert.do")
 	public String alert(HttpServletRequest request, HttpServletResponse response) {
+		request.setAttribute("uri", "alert.jsp");
 
-		return "/WEB-INF/views/alert.jsp";
+		return "/views/main.jsp";
 	}
 
 	@RequestMapping("buttons.do")
 	public String buttons(HttpServletRequest request, HttpServletResponse response) {
+		request.setAttribute("uri", "buttons.jsp");
 
-		return "/WEB-INF/views/buttons.jsp";
+		return "/views/main.jsp";
 	}
 
 	@RequestMapping("content.do")
 	public String blank(HttpServletRequest request, HttpServletResponse response) {
+		request.setAttribute("uri", "content.jsp");
 
-		return "/WEB-INF/views/content.jsp";
+		return "/views/main.jsp";
 	}
-*/
+	*/
 }
