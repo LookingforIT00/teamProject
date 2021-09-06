@@ -5,6 +5,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.sist.controller.Controller;
 import com.sist.controller.RequestMapping;
+import com.sist.jsoup.JsoupManager;
 
 @Controller
 public class MainModel {
@@ -38,6 +39,19 @@ public class MainModel {
 		default:
 			request.setAttribute("uri", "index.jsp");
 			break;
+		}
+
+		return "/views/main.jsp";
+	}
+
+	@RequestMapping("download.do")
+	public String download(HttpServletRequest request, HttpServletResponse response) {
+		request.setAttribute("uri", "index.jsp");
+		JsoupManager jsoup = JsoupManager.getInstance();
+		if(jsoup.downloadJob()) {
+			request.setAttribute("message", "다운로드가 완료되었습니다.");
+		}else {
+			request.setAttribute("message", "다운로드를 실패하셨습니다.");
 		}
 
 		return "/views/main.jsp";
