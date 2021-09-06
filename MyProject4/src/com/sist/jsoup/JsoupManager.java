@@ -129,10 +129,9 @@ public class JsoupManager {
 							vo.setWelfare(welfare);
 							vo.setContent(content.text());
 							String date = startline.get(i).text();
-							date = date.substring(0, date.indexOf("등록") + 2);
 							vo.setStartline(date.substring(0, date.indexOf("등록") + 2));
 							if (date.contains("마감")) {
-								vo.setDeadline(date.substring(date.indexOf("등록") + 2));
+								vo.setDeadline(date.substring(date.indexOf("등록") + 2).trim());
 							} else {
 								vo.setDeadline("-");
 							}
