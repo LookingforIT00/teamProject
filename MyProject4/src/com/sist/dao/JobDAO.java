@@ -48,8 +48,8 @@ public class JobDAO {
 	public void insertJob(JobVO vo) {
 		try {
 			getConnection();
-			String sql = "insert into jobInfo(idx, job_name, edu, career, addr, sal, emp_type, work_type, work_time, welfare, content, startline, deadline, reception, hit, co_name) " + 
-			"values(jobInfo_seq.nextval, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+			String sql = "insert into jobInfo(idx, job_name, edu, career, addr, sal, emp_type, work_type, work_time, welfare, content, startline, deadline, reception, hit, co_name, job_type, personnel, work_place) " + 
+			"values(jobInfo_seq.nextval, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 			ps = conn.prepareStatement(sql);
 			ps.setString(1, vo.getJobName());
 			ps.setString(2, vo.getEdu());
@@ -66,6 +66,9 @@ public class JobDAO {
 			ps.setString(13, vo.getReception());
 			ps.setInt(14, 0);
 			ps.setString(15, vo.getCoName());
+			ps.setString(16, vo.getJob_type());
+			ps.setString(17, vo.getPersonnel());
+			ps.setString(18, vo.getWork_place());
 			ps.executeUpdate();
 		} catch (Exception e) {
 			e.printStackTrace();

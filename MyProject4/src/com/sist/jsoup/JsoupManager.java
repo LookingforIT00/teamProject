@@ -79,6 +79,9 @@ public class JsoupManager {
 							Element content = infoDoc.selectFirst(".careers-table:nth-child(4) tbody tr");
 							Element reception = infoDoc
 									.selectFirst(".careers-table:nth-child(11) tbody td:nth-child(3)");
+							Element jobType = infoDoc.selectFirst(".careers-table.v1:nth-child(6) td:nth-child(1)");
+							Element personnel = infoDoc.selectFirst(".careers-table.v1:nth-child(5) td:nth-child(4)");
+							Element workPlace = infoDoc.selectFirst(".careers-table.v1:nth-child(5) td:nth-child(6)");
 
 							Element coName = infoDoc.selectFirst("div.info li:nth-child(1)>div");
 							Element coType = infoDoc.selectFirst("div.info li:nth-child(2)>div");
@@ -137,6 +140,13 @@ public class JsoupManager {
 							}
 							vo.setReception(reception.text());
 							vo.setCoName(coName.text());
+							vo.setJob_type(jobType.text());
+							//vo.setPersonnel(personnel.text());
+							String per=personnel.text();
+							per=per.substring(0,per.indexOf("입사"));
+							vo.setPersonnel(per);
+							vo.setWork_place(workPlace.text());
+							
 							dao.insertJob(vo);
 							System.out.println(vo.getJobName());
 							System.out.println(vo.getEdu());
@@ -152,6 +162,9 @@ public class JsoupManager {
 							System.out.println(vo.getDeadline());
 							System.out.println(vo.getReception());
 							System.out.println(vo.getCoName());
+							System.out.println(vo.getJob_type());
+							System.out.println(vo.getPersonnel());
+							System.out.println(vo.getWork_place());
 							System.out.println("================================================");
 						}
 					} catch (Exception e) {
