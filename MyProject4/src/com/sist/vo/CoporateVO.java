@@ -2,13 +2,14 @@ package com.sist.vo;
 
 public class CoporateVO {
 	
-	String coName;
-	String coType;
-	String coScale;
-	String coYear;
-	String coSales;
-	String coLink;
-	Integer coWorkers;
+	private String coName;
+	private String coType;
+	private String coScale;
+	private String coYear;
+	private String coSales;
+	private String coLink;
+	private Integer coWorkers;
+	
 	public String getCoName() {
 		return coName;
 	}

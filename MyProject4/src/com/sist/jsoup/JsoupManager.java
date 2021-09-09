@@ -42,7 +42,7 @@ public class JsoupManager {
 						Elements sal = doc.select("td:nth-child(4)>div.cp-info>p:nth-child(1)");
 						Elements workTime = doc.select("td:nth-child(4)>div.cp-info>p:nth-child(4)");
 						Elements startline = doc.select("div.cp-info p.dday+p");
-						Elements info = doc.select("div.cp-info-in > a ");
+						Elements info = doc.select("div.cp-info-in > a");
 
 						for (int i = 0; i < jobName.size(); i++) {
 							String infoUrl = url.substring(0, url.indexOf("/empInfo"));
@@ -60,26 +60,36 @@ public class JsoupManager {
 											.text();
 								}
 							}
+
 							StringBuffer sb = new StringBuffer();
-							Elements welfare_ = infoDoc.select(".careers-table.v1:nth-child(5) td");
+							Elements welfare_ = infoDoc.select("div>.careers-table.v1:nth-child(20) td");
 							for (int j = 0; j < welfare_.size(); j++) {
-								sb.append(welfare_.get(j).text());
-								sb.append("^");
-							}
-							welfare_ = infoDoc.select(".careers-table.v1:nth-child(6) td");
-							for (int j = 0; j < welfare_.size(); j++) {
-								sb.append(welfare_.get(j).text());
-								sb.append("^");
+								String text = welfare_.get(j).text();
+								if(!text.equals("-") && !text.isEmpty()) {
+									sb.append(text);
+									sb.append("^");
+								}
 							}
 							String welfare = sb.toString();
 							sb.setLength(0);
 							if (!welfare.isEmpty()) {
 								welfare = welfare.substring(0, welfare.lastIndexOf("^"));
+							} else {
+								welfare = "-";
 							}
+
 							Element content = infoDoc.selectFirst(".careers-table:nth-child(4) tbody tr");
 							Element reception = infoDoc
 									.selectFirst(".careers-table:nth-child(11) tbody td:nth-child(3)");
-							Element jobType = infoDoc.selectFirst(".careers-table.v1:nth-child(6) td:nth-child(1)");
+
+							Elements jobType_ = infoDoc.select(".careers-table.v1:nth-child(6) td");
+							String jobType = "-";
+							for (int j = 0; j < jobType_.size(); j++) {
+								if (infoDoc.select(".careers-table.v1:nth-child(6) th").get(j).text()
+										.contains("모집직종")) {
+									jobType = jobType_.get(j).text();
+								}
+							}
 							Element personnel = infoDoc.selectFirst(".careers-table.v1:nth-child(5) td:nth-child(4)");
 							Element workPlace = infoDoc.selectFirst(".careers-table.v1:nth-child(5) td:nth-child(6)");
 
@@ -99,8 +109,8 @@ public class JsoupManager {
 							coVO.setCoSales(coSales.text());
 							coVO.setCoLink(coLink.text());
 							String workers = coWorkers.text();
-							if(workers != null) {
-								if(workers.contains("명")) {
+							if (workers != null) {
+								if (workers.contains("명")) {
 									workers = workers.substring(0, workers.indexOf("명"));
 								}
 								workers = workers.trim();
@@ -124,13 +134,13 @@ public class JsoupManager {
 							vo.setSal(sal.get(i).text());
 							vo.setEmpType(empType);
 							vo.setWorkType(workType);
-							if(workTime.get(i).text().isEmpty()) {
+							if (workTime.get(i).text().isEmpty()) {
 								vo.setWorkTime("-");
 							} else {
 								vo.setWorkTime(workTime.get(i).text());
 							}
 							vo.setWelfare(welfare);
-							vo.setContent(content.text());
+							vo.setContent(content.text().replace("$nbsp;", " "));
 							String date = startline.get(i).text();
 							vo.setStartline(date.substring(0, date.indexOf("등록") + 2));
 							if (date.contains("마감")) {
@@ -140,13 +150,12 @@ public class JsoupManager {
 							}
 							vo.setReception(reception.text());
 							vo.setCoName(coName.text());
-							vo.setJob_type(jobType.text());
-							//vo.setPersonnel(personnel.text());
-							String per=personnel.text();
-							per=per.substring(0,per.indexOf("입사"));
+							vo.setJob_type(jobType);
+							vo.setPersonnel(personnel.text());
+							String per = personnel.text();
+							per = per.substring(0, per.indexOf("입사"));
 							vo.setPersonnel(per);
 							vo.setWork_place(workPlace.text());
-							
 							dao.insertJob(vo);
 							System.out.println(vo.getJobName());
 							System.out.println(vo.getEdu());
@@ -166,10 +175,10 @@ public class JsoupManager {
 							System.out.println(vo.getPersonnel());
 							System.out.println(vo.getWork_place());
 							System.out.println("================================================");
+							Thread.sleep(500);
 						}
 					} catch (Exception e) {
 						e.printStackTrace();
-						continue;
 					}
 				}
 				page += 1;

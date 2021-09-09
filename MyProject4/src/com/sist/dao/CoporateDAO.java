@@ -47,6 +47,10 @@ public class CoporateDAO {
 	public void insertCoporate(CoporateVO vo) {
 		try {
 			getConnection();
+
+			System.out.println(vo.getCoName());
+			System.out.println(vo.getCoType());
+			
 			String sql = "insert into coporateData(co_name, co_type, co_scale, co_year, co_sales, co_link, co_workers) " + 
 			"values(?, ?, ?, ?, ?, ?, ?)";
 			ps = conn.prepareStatement(sql);

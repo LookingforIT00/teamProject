@@ -1,14 +1,27 @@
 package com.sist.vo;
 
 public class JobVO {
-	
+
 	private Integer idx;
-	private String jobName; 
-	private String edu; 
+	private String jobName;
+	private String edu;
 	private String career;
 	private String addr;
-	private String sal; 
+	private String sal;
 	private String empType;
+	private String workType;
+	private String workTime;
+	private String welfare;
+	private String content;
+	private String startline;
+	private String deadline;
+	private String reception;
+	private Integer hit;
+	private String coName;
+	private String job_type; // 모집직종
+	private String personnel; // 모집인원
+	private String work_place; // 근무예정지
+	
 	public Integer getIdx() {
 		return idx;
 	}
@@ -105,18 +118,6 @@ public class JobVO {
 	public void setCoName(String coName) {
 		this.coName = coName;
 	}
-	private String workType;
-	private String workTime;
-	private String welfare;
-	private String content;
-	private String startline;
-	private String deadline;
-	private String reception;
-	private Integer hit;
-	private String coName;
-	private String job_type; // 모집직종
-	private String personnel; // 모집인원
-	private String work_place; // 근무예정지
 	public String getJob_type() {
 		return job_type;
 	}
@@ -135,7 +136,4 @@ public class JobVO {
 	public void setWork_place(String work_place) {
 		this.work_place = work_place;
 	}
-	
-	
-	
 }

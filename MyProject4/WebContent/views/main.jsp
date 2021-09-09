@@ -14,7 +14,7 @@
 		<%@ include file="base/navbar.html" %>
 		<!-- strat wrapper -->
 		<div class="h-screen flex flex-row flex-wrap">
-			<%@ include file="base/sidebar.html" %>
+			<%@ include file="base/sidebar.jsp" %>
 			<!-- strat content -->
 			<jsp:include page="${ uri }"/>
 			<!-- end content -->

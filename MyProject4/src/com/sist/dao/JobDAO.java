@@ -48,7 +48,7 @@ public class JobDAO {
 	public void insertJob(JobVO vo) {
 		try {
 			getConnection();
-			String sql = "insert into jobInfo(idx, job_name, edu, career, addr, sal, emp_type, work_type, work_time, welfare, content, startline, deadline, reception, hit, co_name, job_type, personnel, work_place) " + 
+			String sql = "insert into jobInfo(idx, job_name, edu, career, addr, sal, emp_type, work_type, work_time, werfare, content, startline, deadline, reception, hit, co_name, job_type, personnel, work_place) " + 
 			"values(jobInfo_seq.nextval, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 			ps = conn.prepareStatement(sql);
 			ps.setString(1, vo.getJobName());
