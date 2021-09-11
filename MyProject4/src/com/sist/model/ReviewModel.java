@@ -6,6 +6,11 @@ import javax.servlet.http.HttpServletResponse;
 import com.sist.controller.Controller;
 import com.sist.controller.RequestMapping;
 
+import java.util.*;
+import com.sist.dao.*;
+import com.sist.vo.*;
+
+
 @Controller
 public class ReviewModel {
 
@@ -15,4 +20,16 @@ public class ReviewModel {
 
 		return "/views/index.jsp";
 	}
+	
+	@RequestMapping("review/coporateList.do")
+	public String List(HttpServletRequest request, HttpServletResponse response) {
+		
+		CoporateReviewDAO dao=CoporateReviewDAO.getInstance();
+		List<CoporateReviewVO> list=dao.coporateListData();
+		request.setAttribute("list", list);
+		request.setAttribute("uri", "/views/review/coporateList.jsp");
+		
+		return "/views/index.jsp";
+	}
+		
 }
