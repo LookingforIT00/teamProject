@@ -9,9 +9,16 @@ import com.sist.controller.RequestMapping;
 @Controller
 public class ReviewModel {
 
-	@RequestMapping("review/coporateView.do")
-	public String view(HttpServletRequest request, HttpServletResponse response) {
-		request.setAttribute("uri", "/views/review/coporateView.jsp");
+	@RequestMapping("review/inList.do")
+	public String inList(HttpServletRequest request, HttpServletResponse response) {
+		request.setAttribute("uri", "/views/review/inList.jsp");
+
+		return "/views/index.jsp";
+	}
+
+	@RequestMapping("review/coList.do")
+	public String coList(HttpServletRequest request, HttpServletResponse response) {
+		request.setAttribute("uri", "/views/review/coList.jsp");
 
 		return "/views/index.jsp";
 	}
