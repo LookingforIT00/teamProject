@@ -75,7 +75,7 @@
 								<div class="form-group">
 									<label for = "inp-type-5" class="col-sm-2 control-label">내용</label>
 									<div class="col-sm-10">
-										<textarea class="form-control">${vo.content}</textarea>
+										<textarea class="form-control" style="background-color:white" readonly>${vo.content}</textarea>
 									</div>
 								</div>
 					
