@@ -15,8 +15,8 @@ public class MemberModel {
   @RequestMapping("member/join.do")
   public String member_join(HttpServletRequest request,HttpServletResponse response)
   {
-	  request.setAttribute("main_jsp", "../member/join.jsp");
-	  return "../main/main.jsp";
+	  request.setAttribute("index_jsp", "../member/join.jsp");
+	  return "../index.jsp";
   }
   
   // 실행 => 실행결과만 받아온다 (Ajax) => Shadowbox를 그대로하면 결과값만 받아서 출력 (페이지 자체 처리)
@@ -90,6 +90,8 @@ public class MemberModel {
 	  String addr2=request.getParameter("addr2");
 	  String tel1=request.getParameter("tel1");// UNIQUE => 아이디 찾기 (후보키)
 	  String tel2=request.getParameter("tel2");//
+	  String hope_region=request.getParameter("tel2");//
+	  String hope_job=request.getParameter("tel2");//
 	  
 	  MemberVO vo=new MemberVO();
 	  vo.setId(id);
@@ -101,11 +103,15 @@ public class MemberModel {
 	  vo.setEmail(email);
 	  vo.setAddr1(addr1);
 	  vo.setAddr2(addr2);
+	  vo.setHope_job(hope_job);
+	  vo.setHope_region(hope_region);
 	  vo.setTel(tel1+"-"+tel2);
 	  // DAO로 전송 
 	  MemberDAO dao=MemberDAO.newInstance();
 	  dao.memberJoinInsert(vo);
-	  return "redirect:../main/main.do";// main에서 회원가입 데이터가 필요가 없다 (request초기화)
+//	  return "redirect:../main/main.do";// main에서 회원가입 데이터가 필요가 없다 (request초기화)
+	  return "redirect:../index.do";// main에서 회원가입 데이터가 필요가 없다 (request초기화)
+	  
 	  // sendRedirect() ==> DispatcherServlet => redirect:
   }
   // 회원 가입 , 로그인 , 예매/예약 , 검색  , 추천 (통계)  => 페이지기법 
@@ -142,6 +148,7 @@ public class MemberModel {
   {
 	  HttpSession session=request.getSession();
 	  session.invalidate(); // 데이터 전체 삭제
-	  return "redirect:../main/main.do";
+//	  return "redirect:../main/main.do";
+	  return "redirect:../index.do";
   }
 }

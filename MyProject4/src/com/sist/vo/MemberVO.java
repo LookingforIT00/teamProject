@@ -11,10 +11,29 @@ package com.sist.vo;
 	ADDR2             VARCHAR2(300) 
 	TEL      NOT NULL VARCHAR2(20)  
 	ADMIN             CHAR(1) 
+	hope_region NOT NULL VARCHAR2(50)  
+hope_job    NOT NULL VARCHAR2(50) 
  * 
  */
 public class MemberVO {
-	private String id,pwd,name,sex,birthday,email,post,addr1,addr2,tel,admin;
+	private String id,pwd,name,sex,birthday,email,post,addr1,addr2,tel,admin,
+	               hope_region, hope_job;
+
+	public String getHope_region() {
+		return hope_region;
+	}
+
+	public void setHope_region(String hope_region) {
+		this.hope_region = hope_region;
+	}
+
+	public String getHope_job() {
+		return hope_job;
+	}
+
+	public void setHope_job(String hope_job) {
+		this.hope_job = hope_job;
+	}
 
 	public String getId() {
 		return id;
