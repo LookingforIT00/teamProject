@@ -23,19 +23,12 @@ public class ReviewModel {
 
 	@RequestMapping("review/coList.do")
 	public String coList(HttpServletRequest request, HttpServletResponse response) {
-		request.setAttribute("uri", "/views/review/coList.jsp");
-
-		return "/views/index.jsp";
-	}
-	
-	@RequestMapping("review/coporateList.do")
-	public String List(HttpServletRequest request, HttpServletResponse response) {
 		
 		CoporateReviewDAO dao=CoporateReviewDAO.getInstance();
 		List<CoporateReviewVO> list=dao.coporateListData();
 		request.setAttribute("list", list);
-		request.setAttribute("uri", "/views/review/coporateList.jsp");
-		
+		request.setAttribute("uri", "/views/review/coList.jsp");
+
 		return "/views/index.jsp";
 	}
 		
