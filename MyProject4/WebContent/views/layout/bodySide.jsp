@@ -17,7 +17,7 @@
                 </a>
                 <div class="collapse" id="collapseLayouts" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
                     <nav class="sb-sidenav-menu-nested nav">
-                        <a class="nav-link" href="layout-static.html">면접 리뷰</a>
+                        <a class="nav-link" href="#">면접 리뷰</a>
                         <a class="nav-link" href="<%=request.getContextPath()%>/review/coList.do">기업 리뷰</a>
                     </nav>
                 </div>

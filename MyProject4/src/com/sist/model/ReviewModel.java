@@ -23,6 +23,10 @@ public class ReviewModel {
 
 	@RequestMapping("review/coList.do")
 	public String coList(HttpServletRequest request, HttpServletResponse response) {
+		try
+		{
+			request.setCharacterEncoding("UTF-8");
+		}catch(Exception e) {}
 		
 		CoporateReviewDAO dao=CoporateReviewDAO.getInstance();
 		List<CoporateReviewVO> list=dao.coporateListData();
