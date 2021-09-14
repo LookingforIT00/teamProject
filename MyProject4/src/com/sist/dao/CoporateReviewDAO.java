@@ -12,7 +12,6 @@ public class CoporateReviewDAO {
 	private PreparedStatement ps;	
 	
 	private static CoporateReviewDAO instance;
-
 	public static CoporateReviewDAO getInstance() {
 		if (instance == null) {
 			instance = new CoporateReviewDAO();
@@ -42,18 +41,26 @@ public class CoporateReviewDAO {
 		}
 	}
 	
-	// 목록 읽기
-	public List<CoporateReviewVO> coporateListData()
+	// 목록
+	public List<CoporateReviewVO> coporateListData(int page)
 	{
-		ArrayList<CoporateReviewVO> list= new ArrayList<CoporateReviewVO>();
+		List<CoporateReviewVO> list= new ArrayList<CoporateReviewVO>();
 		try
 		{
 			getConnection();
-			// idk 시퀀스 인덱스 설정해야함
-			String sql="SELECT idk,coporate_nm, score, co_evaluation, advantages, disadvantages, job, "
-					+"regdate, employment, employment_status, area "
-					+"FROM coporate_review";
+			String sql="SELECT idk,coporate_nm, score, co_evaluation, advantages, disadvantages, job,regdate, employment, employment_status, area, num "
+					+"FROM (SELECT idk,coporate_nm, score, co_evaluation, advantages, disadvantages, job,regdate, employment, employment_status, area, rownum as num "
+					+"FROM (SELECT idk,coporate_nm, score, co_evaluation, advantages, disadvantages, job,regdate, employment, employment_status, area "
+					+"FROM coporate_review ORDER BY idk)) "
+					+"WHERE num BETWEEN ? AND ?";
+			
 			ps=conn.prepareStatement(sql);
+			int rowsize = 10;
+			int start = (rowsize * page) - (rowsize - 1);
+			int end = rowsize * page;
+			ps.setInt(1, start);
+			ps.setInt(2, end);
+			   
 			ResultSet rs=ps.executeQuery();
 			while(rs.next())
 			{
@@ -79,6 +86,43 @@ public class CoporateReviewDAO {
 			disConnection();
 		}
 		return list;
+	}
+	
+	// 총페이지
+	public int coporateTotalPage() {
+		int total = 0;
+		try {
+			getConnection();
+			String sql = "SELECT CEIL(COUNT(*)/10.0) FROM coporate_review";
+			ps = conn.prepareStatement(sql);
+			ResultSet rs = ps.executeQuery();
+			rs.next();
+			total = rs.getInt(1);
+			rs.close();
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		} finally {
+			disConnection();
+		}
+		return total;
+	}
+
+	// 데이터 입력
+	public void reviewInsert(CoporateReviewVO vo)
+	{
+		try
+		{
+			getConnection();
+			String sql="INSERT INTO coporate_review VALUES(cr_idk_seq.nextval,?,?,?,?,?,?,SYSDATE,?,?,?)";
+			ps=conn.prepareStatement(sql);
+			
+		}catch(Exception e)
+		{
+			e.printStackTrace();
+		}finally
+		{
+			disConnection();
+		}
 	}
 
 }
