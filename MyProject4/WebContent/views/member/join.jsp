@@ -22,7 +22,6 @@ $(function(){
 			height:200
 		}); 
 	});
-	// id,class(javascript/css) ,name(java에 값을 보낸다) 
 	$('#postBtn').click(function(){
 		 Shadowbox.open({
 			content:'../member/postfind.jsp',
@@ -33,14 +32,6 @@ $(function(){
 		}); 
 	});
 	$('#sendBtn').click(function(){
-		// NOT NULL => 강제 입력 (오라클에서 오류 방지 => 유효성 검사)
-		//alert("click");
-		/* let id=$('#id').val();
-		if(id.trim()=="")
-		{
-			$('#id').focus();
-			return;
-		} */
 		
 		let pwd=$('#pwd').val();
 		if(pwd.trim()=="")
@@ -55,36 +46,26 @@ $(function(){
 			return;
 		}
 		
-		// 이름 
 		let name=$('#name').val();
 		if(name.trim()=="")
 		{
 			$('#name').focus();
 			return;
 		}
-		// 생년월일
+		
 		let birth=$('#birthday').val();
 		if(birth.trim()=="")
 		{
 			$('#birthday').focus();
 			return;
 		}
-		// 이메일
+		
 		let email=$('#email').val();
 		if(email.trim()=="")
 		{
 			$('#email').focus();
 			return;
 		}
-		// 주소 
-		/* let addr1=$('#addr1').val();
-		if(addr1.trim()=="")
-		{
-			$('#addr1').focus();
-			return;
-		} */
-		
-		// 전화번호
 		let tel2=$('#tel2').val();
 		if(tel2.trim()=="")
 		{
@@ -92,7 +73,19 @@ $(function(){
 			return;
 		}
 		
-		// 정상수행 
+		let hope_region=$('#hope_region').val();
+		if(hope_region.trim()=="")
+		{
+			$('#hope_region').focus();
+			return;
+		}
+		
+		let hope_job=$('#hope_job').val();
+		if(hope_job.trim()=="")
+		{
+			$('#hope_job').focus();
+			return;
+		}
 		$('#joinFrm').submit();
 	})
 })
@@ -183,6 +176,18 @@ $(function(){
             <option>010</option>
            </select>
            <input type=text name=tel2 size=20 class="input-sm" id=tel2>
+         </td>
+       </tr>
+       <tr>
+         <th class="text-right" width=15%>희망지역</th>
+         <td width=85% class="inline">
+           <input type=text name=hope_region size=20 class="input-sm" id=name>
+         </td>
+       </tr>
+       <tr>
+         <th class="text-right" width=15%>희망직종</th>
+         <td width=85% class="inline">
+           <input type=text name=hope_job size=20 class="input-sm" id=name>
          </td>
        </tr>
        <tr>
