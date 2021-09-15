@@ -16,32 +16,24 @@
       	<c:forEach var="vo" items="${reviewList }">
 		<table class="table">
 				<tr>
-					<th>기업명</th><td>${vo.coporate_nm }</td>
+					<th><a href="#">${vo.coporate_nm }</a></th>
 				</tr>
 				<tr>
-					<th>평점</th><td>${vo.score }</td>
-				</tr>
-				
+					<th>평점</th>
+					<td><span style="color:orange">${vo.score }</span></td>
+				</tr>	
 				<tr>
 					<th>한줄평</th>
-				</tr>
-				<tr>
 					<td>${vo.co_evaluation }</td>
 				</tr>
-				
 				<tr>
 					<th>장점</th>
-				</tr>
-				<tr>
 					<td>${vo.advantages }</td>
-				</tr>
-				
+				</tr>	
 				<tr>
 					<th>단점</th>
-				</tr>
-				<tr>
 					<td>${vo.disadvantages }</td>
-				</tr>			
+				</tr>		
 		</table>
 		</c:forEach>
 		</td>

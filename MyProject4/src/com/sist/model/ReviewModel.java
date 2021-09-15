@@ -25,17 +25,21 @@ public class ReviewModel {
 	// 기업리뷰
 	@RequestMapping("review/coList.do")
 	public String coList(HttpServletRequest request, HttpServletResponse response) {
+		
 		try
 		{
 			request.setCharacterEncoding("UTF-8");
 		}catch(Exception e) {}
+		
 		
 		String page = request.getParameter("page");
 		if (page == null)
 		{
 			page = "1";
 		}
+		
 		CoporateReviewDAO dao=CoporateReviewDAO.getInstance();
+		
 		int curpage=Integer.parseInt(page);
 		List<CoporateReviewVO> list=dao.coporateListData(curpage);
 		int totalpage=dao.coporateTotalPage();

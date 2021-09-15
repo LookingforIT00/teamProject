@@ -51,8 +51,8 @@ public class CoporateReviewDAO {
 			String sql="SELECT idk,coporate_nm, score, co_evaluation, advantages, disadvantages, job,regdate, employment, employment_status, area, num "
 					+"FROM (SELECT idk,coporate_nm, score, co_evaluation, advantages, disadvantages, job,regdate, employment, employment_status, area, rownum as num "
 					+"FROM (SELECT idk,coporate_nm, score, co_evaluation, advantages, disadvantages, job,regdate, employment, employment_status, area "
-					+"FROM coporate_review ORDER BY idk)) "
-					+"WHERE num BETWEEN ? AND ?";
+					+"FROM coporate_review ORDER BY idk ASC)) "
+					+"WHERE num BETWEEN ? AND	 ?";
 			
 			ps=conn.prepareStatement(sql);
 			int rowsize = 10;
@@ -65,16 +65,17 @@ public class CoporateReviewDAO {
 			while(rs.next())
 			{
 				CoporateReviewVO vo=new CoporateReviewVO();
-				vo.setCoporate_nm(rs.getString(1));
-				vo.setScore(rs.getDouble(2));
-				vo.setCo_evaluation(rs.getString(3));
-				vo.setAdvantages(rs.getString(4));
-				vo.setDisadvantages(rs.getString(5));
-				vo.setJob(rs.getString(6));
-				vo.setRegdate(rs.getDate(7));
-				vo.setEmployment(rs.getString(8));
-				vo.setEmployemnt_status(rs.getString(9));
-				vo.setArea(rs.getString(10));
+				vo.setIdk(rs.getInt(1));
+				vo.setCoporate_nm(rs.getString(2));
+				vo.setScore(rs.getDouble(3));
+				vo.setCo_evaluation(rs.getString(4));
+				vo.setAdvantages(rs.getString(5));
+				vo.setDisadvantages(rs.getString(6));
+				vo.setJob(rs.getString(7));
+				vo.setRegdate(rs.getDate(8));
+				vo.setEmployment(rs.getString(9));
+				vo.setEmployemnt_status(rs.getString(10));
+				vo.setArea(rs.getString(11));
 				list.add(vo);
 			}
 			rs.close();
