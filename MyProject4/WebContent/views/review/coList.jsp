@@ -8,8 +8,13 @@
 <title>리뷰 게시판</title>
 </head>
 <body>
-	<h1 class="mt-4">회사 후기</h1>
-	
+  <div class="container-fluid px-4">
+	<h1 class="text-center">회사 후기</h1>
+	<div class="card mb-4">
+		<div class="card-body">
+			<a href="<%=request.getContextPath()%>/review/coInsert.do" class="btn btn-sm btn-danger">작성</a>
+		</div>
+	</div>
 	<div id="main">
 	 <table class="table">
 	 <tr>
@@ -17,22 +22,22 @@
       	<c:forEach var="vo" items="${reviewList }">
 		<table class="table">
 				<tr>
-					<th><a href="#">${vo.coporate_nm }</a></th>
+					<th colspan="2"><a href="#">${vo.coporate_nm }</a></th>
 				</tr>
 				<tr>
-					<th>평점</th>
+					<th width=10%>평점</th>
 					<td><span style="color:orange">${vo.score }</span></td>
 				</tr>	
 				<tr>
-					<th>한줄평</th>
+					<th width=10%>한줄평</th>
 					<td>${vo.co_evaluation }</td>
 				</tr>
 				<tr>
-					<th>장점</th>
+					<th width=10%>장점</th>
 					<td>${vo.advantages }</td>
 				</tr>	
 				<tr>
-					<th>단점</th>
+					<th width=10%>단점</th>
 					<td>${vo.disadvantages }</td>
 				</tr>		
 		</table>
@@ -40,6 +45,16 @@
 		</td>
 		</tr>
 	 </table>
+	 <table class="table">
+     <tr>
+       <td class="text-center">
+         <a href="<%=request.getContextPath()%>/review/coList.do?page=${curpage>1?curpage-1:curpage }" class="btn btn-sm btn-primary">이전</a>
+          ${curpage } page / ${totalpage } pages
+         <a href="<%=request.getContextPath()%>/review/coList.do?page=${curpage<totalpage?curpage+1:curpage }" class="btn btn-sm btn-primary">다음</a>
+       </td>
+     </tr>
+   </table>
 	</div>
+</div>
 </body>
 </html>

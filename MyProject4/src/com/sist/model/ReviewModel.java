@@ -25,13 +25,7 @@ public class ReviewModel {
 	
 	@RequestMapping("review/coList.do")
 	public String coList(HttpServletRequest request, HttpServletResponse response) {
-		
-		try
-		{
-			request.setCharacterEncoding("UTF-8");
-		}catch(Exception e) {}
-		
-		
+				
 		String page = request.getParameter("page");
 		if (page == null)
 		{
@@ -57,7 +51,18 @@ public class ReviewModel {
 	public String coInsert(HttpServletRequest request, HttpServletResponse response) {
 		
 		request.setAttribute("uri", "/views/review/coInsert.jsp");
-		return "/view/index.jsp";
+		return "/views/index.jsp";
+	}
+	
+	@RequestMapping("review/coInsert_ok.do")
+	public String coInsert_ok(HttpServletRequest request, HttpServletResponse response)
+	{
+		try
+		{
+			request.getParameter("UTF-8");
+		}catch(Exception e) {}
+		
+		return "redirect:../views/reviews/coList.jsp";
 	}
 		
 }
