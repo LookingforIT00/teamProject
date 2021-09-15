@@ -15,8 +15,8 @@ public class MemberModel {
   @RequestMapping("member/join.do")
   public String member_join(HttpServletRequest request,HttpServletResponse response)
   {
-	  request.setAttribute("index_jsp", "../member/join.jsp");
-	  return "../index.jsp";
+	  request.setAttribute("uri", "/views/member/join.jsp");
+	  return "/views/index.jsp";
   }
   
   @RequestMapping("member/idcheck.do")
@@ -46,7 +46,7 @@ public class MemberModel {
   @RequestMapping("member/join_ok.do")
   public String member_join_ok(HttpServletRequest request,HttpServletResponse response)
   {
-	  System.out.println("È¸¿ø µ¥ÀÌÅÍ Àü¼Û¿Ï·á");
+	  System.out.println("È¸ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Û¿Ï·ï¿½");
 	  try
 	  {
 		  request.setCharacterEncoding("UTF-8");
@@ -79,7 +79,7 @@ public class MemberModel {
 	  vo.setHope_region(hope_region);
 	  vo.setHope_job(hope_job);
 	  vo.setTel(tel1+"-"+tel2);
-	  // DAO·Î Àü¼Û 
+	  // DAOï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ 
 	  MemberDAO dao=MemberDAO.newInstance();
 	  dao.memberJoinInsert(vo);
 //	  return "redirect:../main/main.do";
@@ -106,14 +106,14 @@ public class MemberModel {
 		  result="OK";
 	  }
 	  request.setAttribute("result", result);
-	  return "../member/login_result.jsp";
+	  return "views/member/login_result.jsp";
   }
   
   @RequestMapping("member/logout.do")
   public String member_logout(HttpServletRequest request,HttpServletResponse response)
   {
 	  HttpSession session=request.getSession();
-	  session.invalidate(); // µ¥ÀÌÅÍ ÀüÃ¼ »èÁ¦
+	  session.invalidate(); // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ã¼ ï¿½ï¿½ï¿½ï¿½
 //	  return "redirect:../main/main.do";
 	  return "redirect:../index.do";
   }

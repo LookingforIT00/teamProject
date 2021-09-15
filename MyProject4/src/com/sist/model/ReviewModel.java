@@ -1,5 +1,6 @@
 package com.sist.model;
 
+import javax.security.auth.message.callback.PrivateKeyCallback.Request;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -22,7 +23,6 @@ public class ReviewModel {
 	}
 
 	
-	// 기업리뷰
 	@RequestMapping("review/coList.do")
 	public String coList(HttpServletRequest request, HttpServletResponse response) {
 		
@@ -51,6 +51,13 @@ public class ReviewModel {
 		
 		request.setAttribute("uri", "/views/review/coList.jsp");
 		return "/views/index.jsp";
+	}
+	
+	@RequestMapping("review/coInsert.do")
+	public String coInsert(HttpServletRequest request, HttpServletResponse response) {
+		
+		request.setAttribute("uri", "/views/review/coInsert.jsp");
+		return "/view/index.jsp";
 	}
 		
 }

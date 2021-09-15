@@ -114,8 +114,16 @@ public class CoporateReviewDAO {
 		try
 		{
 			getConnection();
-			String sql="INSERT INTO coporate_review VALUES(cr_idk_seq.nextval,?,?,?,?,?,?,SYSDATE,?,?,?)";
+			String sql="INSERT INTO coporate_review(idk,coporate_nm, score, co_evaluation, advantages, disadvantages, job,regdate, employment, employment_status, area) "
+					+ "VALUES(cr_idk_seq.nextval,?,?,?,?,?,?,SYSDATE,null,null,null)";
 			ps=conn.prepareStatement(sql);
+			ps.setString(1,vo.getCoporate_nm());
+			ps.setDouble(2, vo.getScore());
+			ps.setString(3, vo.getCo_evaluation());
+			ps.setString(4, vo.getAdvantages());
+			ps.setString(5, vo.getDisadvantages());
+			ps.setString(6, vo.getJob());		
+			ps.executeUpdate();
 			
 		}catch(Exception e)
 		{
@@ -125,5 +133,5 @@ public class CoporateReviewDAO {
 			disConnection();
 		}
 	}
-
+	
 }
