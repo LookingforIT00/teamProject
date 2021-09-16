@@ -49,7 +49,7 @@
 						<th>기업의 단점</th>
 						<td><input type="text" name="disadvantages" size=100 class="input-sm"></td>
 					</tr>
-				</table>t
+				</table>
 			</form>
 		</div>
 	</div>

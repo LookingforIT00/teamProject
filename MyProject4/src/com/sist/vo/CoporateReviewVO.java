@@ -14,8 +14,7 @@ AREA              NOT NULL VARCHAR2(60)
  */
 import java.util.Date;
 public class CoporateReviewVO {
-	private int idk;
-	private double score;
+	private int idk,score;
 	private Date regdate;
 	private String coporate_nm, co_evaluation, advantages, disadvantages, job, employment, employemnt_status, area;
 	public int getIdk() {
@@ -24,10 +23,10 @@ public class CoporateReviewVO {
 	public void setIdk(int idk) {
 		this.idk = idk;
 	}
-	public double getScore() {
+	public int getScore() {
 		return score;
 	}
-	public void setScore(double score) {
+	public void setScore(int score) {
 		this.score = score;
 	}
 	public Date getRegdate() {

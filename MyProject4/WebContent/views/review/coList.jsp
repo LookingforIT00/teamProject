@@ -6,6 +6,9 @@
 <head>
 <meta charset="UTF-8">
 <title>리뷰 게시판</title>
+<script src="https://code.jquery.com/jquery-1.12.4.min.js">
+
+</script>
 </head>
 <body>
   <div class="container-fluid px-4">
@@ -26,7 +29,17 @@
 				</tr>
 				<tr>
 					<th width=10%>평점</th>
-					<td><span style="color:orange">${vo.score }</span></td>
+					<!--<td><span style="color:orange">${vo.score }</span></td>-->
+					<td>
+						<c:choose>
+					 	<c:when test="${vo.score eq 1}">★☆☆☆☆</c:when>
+					 	<c:when test="${vo.score eq 2 }">★★☆☆☆</c:when>
+					 	<c:when test="${vo.score eq 3 }">★★★☆☆</c:when>
+					 	<c:when test="${vo.score eq 4 }">★★★★☆</c:when>
+					 	<c:when test="${vo.score eq 5 }">★★★★★</c:when>
+					 	<c:otherwise>☆☆☆☆☆</c:otherwise>
+					 </c:choose>
+					</td>
 				</tr>	
 				<tr>
 					<th width=10%>한줄평</th>

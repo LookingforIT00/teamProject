@@ -35,17 +35,17 @@ public class ReviewModel {
 		CoporateReviewDAO dao=CoporateReviewDAO.getInstance();
 		
 		int curpage=Integer.parseInt(page);
-		List<CoporateReviewVO> list=dao.coporateListData(curpage);
 		int totalpage=dao.coporateTotalPage();
+		List<CoporateReviewVO> list=dao.coporateListData(curpage);
 		
 		request.setAttribute("curpage", curpage);
 		request.setAttribute("totalpage", totalpage);
 		request.setAttribute("reviewList", list);
 		
-		
 		request.setAttribute("uri", "/views/review/coList.jsp");
 		return "/views/index.jsp";
 	}
+	
 	
 	@RequestMapping("review/coInsert.do")
 	public String coInsert(HttpServletRequest request, HttpServletResponse response) {
