@@ -27,15 +27,13 @@
 		</style>
 	</head>
 	<body>
-		<div id="commentModal" class="modal fade" tabindex = "-1" role = "dialog" aria-labelledby = "myModalLabel">
+		<div id="commentModal" class="modal fade" tabindex = "-1" role = "dialog">
 			<div class="modal-dialog" role="document">
 				<div class="modal-content">
-					<div class="modal-header" style="padding:0px; margin-right:15px">
-						<button type="button" class="close" data-dismiss="modal"
-							aria-label = "Close">
-							<span style="font-size:50px">&times;</span>
-						</button>
-					</div>
+			      	<div class="modal-header">
+				        <h5 class="modal-title">Modal title</h5>
+				        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+			      	</div>
 					<div class="modal-body">
 						<form>
 							<div class="form-group">
@@ -43,7 +41,7 @@
 								<input id="modalWriter" class="form-control" style="background-color:white" readonly />
 							</div>
 							<div class="form-group">
-								<label for = "modalContent" class="col-form-label">내용</label>
+								<label for="modalContent" class="col-form-label">내용</label>
 								<textarea id="modalContent" class="form-control"
 									placeholder = "내용을 입력해 주세요."></textarea>
 							</div>
@@ -129,7 +127,7 @@
 							<input type="text" id="content" class="form-control" maxlength = "50" />
 							<div class="input-group-btn">
 								<button type="button" class="btn btn-default" onclick = "insertComment(${vo.idx}, 'board')">
-									<i class="glyphicon glyphicon-send"></i>
+									쓰기
 								</button>
 							</div>
 						</div>
@@ -200,7 +198,7 @@
 								<input type="text" id="commentInput" class="form-control" maxlength = "50" />
 								<div class="input-group-btn">
 									<button type="button" class="btn btn-default" style="margin:0px auto; padding:0px" onclick = "insertComment(`+idx+`,'comment')">
-										<i class="glyphicon glyphicon-send"></i>
+									쓰기
 									</button>
 			
 							</div>
@@ -243,7 +241,6 @@
 							alert("댓글 등록에 실패하였습니다.");
 							return false;
 						}
-	
 						printCommentList();
 						content.val("");
 					},
@@ -277,10 +274,8 @@
 					success : function(response) {
 						if (!response) {
 							alert("댓글 수정에 실패하였습니다.");
-							
 							return false;
 						}
-			
 						printCommentList();
 						$("#commentModal").modal("hide");
 					},
@@ -308,10 +303,8 @@
 					success : function(response) {
 						if (!response) {
 							alert("댓글 삭제에 실패하였습니다.");
-							
 							return false;
 						}
-	
 						printCommentList();
 						$("#commentModal").modal("hide");
 					},

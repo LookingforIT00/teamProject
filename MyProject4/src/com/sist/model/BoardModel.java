@@ -23,7 +23,6 @@ public class BoardModel {
 
 		int recordsPerPage = 10;
 		int pageSize = 5;
-		
 		try {
 			request.setCharacterEncoding("UTF-8");
 		} catch (Exception e) {
@@ -37,28 +36,35 @@ public class BoardModel {
 		if(page != null) {
 			page_ = Integer.parseInt(page);
 		}
-		int min = 1+(recordsPerPage*(page_-1));
-		int max = recordsPerPage*page_;
-
-		List<BoardVO> boardList = dao.selectBoardList(search, min, max);
-		request.setAttribute("boardList", boardList);
 
 		int boardCount = dao.selectBoardCount(search);
-		int maxPage = ((boardCount-1) / recordsPerPage) + 1;
-		
-		int pageSize_ = pageSize / 2;
-		int minPage_ = page_ - pageSize_;
-		if(minPage_ < 1) {
-			minPage_ = 1;
-		}
-		int maxPage_ = page_ + pageSize_;
-		if(maxPage_ > maxPage) {
-			maxPage_ = maxPage;
+		if(boardCount > 0) {
+			int min = 1+(recordsPerPage*(page_-1));
+			int max = recordsPerPage*page_;
+
+			List<BoardVO> boardList = dao.selectBoardList(search, min, max);
+			request.setAttribute("boardList", boardList);
+
+			int maxPage = ((boardCount-1) / recordsPerPage) + 1;
+			int pageSize_ = pageSize / 2;
+			int minPage_ = page_ - pageSize_;
+			int maxPage_ = page_ + pageSize_;
+			if(minPage_ < 1) {
+				maxPage_ += 1-minPage_;
+				minPage_ = 1;
+			}
+			if(maxPage_ > maxPage) {
+				minPage_ += maxPage-maxPage_;
+				maxPage_ = maxPage;
+				if(minPage_ < 1) {
+					minPage_ = 1;
+				}
+			}
+			request.setAttribute("minPage", minPage_);
+			request.setAttribute("maxPage", maxPage_);
 		}
 		request.setAttribute("page", page_);
 		request.setAttribute("search", search);
-		request.setAttribute("minPage", minPage_);
-		request.setAttribute("maxPage", maxPage_);
 
 		request.setAttribute("uri", "/views/board/list.jsp");
 

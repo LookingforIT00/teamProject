@@ -56,7 +56,7 @@
 									</div>
 								</div>
 					
-								<div id="btnDiv" class="text-center">
+								<div id="btnDiv" class="text-center" style="margin-top:20px">
 									<button type="button"
 										class="btn btn-default"
 										onclick="backwardBoard()">뒤로가기</button>

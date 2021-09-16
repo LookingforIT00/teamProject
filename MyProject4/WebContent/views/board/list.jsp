@@ -33,13 +33,11 @@
 					<div class="box-content">
 						<div class="clearfix">
 							<form action="<%=request.getContextPath()%>/board/list.do" method="get" class="form-horizontal">
-								<div id="adv-search" class="input-group">
-									<input type="text" id="search" class="form-control" name="search" placeholder="키워드를 입력해 주세요." />
+								<div class="input-group">
+									<input type="text" id="search" class="form-control" name="search" value="${search}" placeholder="키워드를 입력해 주세요." />
 									<input type="hidden" name="page" value="1" />
 									<div class="input-group-btn">
-										<div class="btn-group">
-											<button type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-search"></span></button>
-										</div>
+										<button type="submit"  style="border:0px; padding:8px 25px; color:white" class="btn btn-primary">검색</button>
 									</div>
 								</div>
 							</form>
@@ -80,20 +78,19 @@
 								</tbody>
 							</table>
 							<div class="text-right">
-								<form action="<%=request.getContextPath()%>/board/write.do" method="post">
+								<form action="<%=request.getContextPath()%>/board/write.do" method="post" style="text-align:right">
 									<button type="submit" class="btn btn-primary">글쓰기</button>
 								</form>
 							</div>
-							
 							<c:if test="${fn:length(boardList) > 0}">
-								<nav class="text-center">
-									<ul class="pagination">
+								<nav>
+								  	<ul class="pagination justify-content-center">
 										<c:forEach var="pageNo" begin="${minPage}" end="${maxPage}">
-											<li onclick="movePage('${pageNo}')" class="${(pageNo eq page) ? 'active' : '' }">
-												<a href="javascript:void(0)">${pageNo}</a>
+											<li onclick="movePage('${pageNo}')" class="page-item ${(pageNo eq page) ? 'active' : '' }">
+												<a class="page-link" href="javascript:void(0)">${pageNo}</a>
 											</li>
 										</c:forEach>
-									</ul>
+								  	</ul>
 								</nav>
 							</c:if>
 						</div>

@@ -1,583 +1,541 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=utf-8"
+	pageEncoding="utf-8"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+	
 <!DOCTYPE html>
 <html>
-<head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
-<style>
-</style>
-</head>
-<body>
-	<main>
-		<div class="container-fluid px-4">
-			<h1 class="mt-4">Dashboard</h1>
-			<ol class="breadcrumb mb-4">
-				<li class="breadcrumb-item active">Dashboard</li>
-			</ol>
+	<head>
+		<link rel="stylesheet" href="<c:url value="/plugin/bootstrap/css/bootstrap.min.css" />">
+		<script src="<c:url value="/plugin/bootstrap/js/bootstrap.min.js" />"></script>
+		<title>메인</title>
+		<style type="text/css">
+			.monthMove span:first-child {
+				float: left;
+				width: 33.3%;
+				margin: 0px auto;
+			}
+			.monthMove span:nth-child(2) {
+				float: left;
+				width: 33.3%;
+				margin: 0px auto;
+				font-size: 40px;
+				text-align: center;
+			}
+			.monthMove span:last-child {
+				float: right;
+				width: 33.3%;
+				margin: 0px auto;
+			}
+			.table {
+				border-collapse: separate;
+				border-spacing: 0;
+			}
+			.table > tbody > tr > td{width: 14.2%}
+			.table > tbody > tr > td.now{
+				background-color: #aaffa8;
+				font-weight: bold;
+			}
+			.table > thead > tr > th.sun,
+			.table > tbody > tr > td.sun{
+				color: red;
+			}
+			.table > thead > tr > th.sat,
+			.table > tbody > tr > td.sat{
+				color: blue;
+			}
+			.table > tbody > tr > td.nan{
+				color: gray;
+			}
+			.table-hover-large > tbody > tr > td {
+			    border: solid 1px #000;
+			    border-style: none solid solid none;
+			    padding: 10px;
+			    border-radius: 10px;
+				font-size:30px;
+			}
+			.table-hover-large > tbody > tr > td > p {
+				font-size:20px;
+			}
+			.table-hover-large > tbody > tr > td:hover {
+  				background-color: #f5f5f5;
+				cursor: pointer;
+			}
+			.table-hover-large > tbody > tr > td.now:hover {
+				background-color: #99dda7;
+			}
+			.table-hover > tbody > tr > td {
+				padding: 3px;
+			}
+			.table-hover > tbody > tr:hover {
+				cursor: pointer;
+			}
+			.table-hover > tbody > tr:hover > td {
+				padding: 0px;
+				border: orange 3px;
+			    border-style: solid none solid none;
+			}
+			.table-hover > tbody > tr:hover > td:first-child {
+			    border-style: solid none solid solid;
+  				border-bottom-left-radius: 100%;
+  				border-top-left-radius: 100%;
+			}
+			.table-hover > tbody > tr:hover > td:last-child {
+			    border-style: solid solid solid none;
+  				border-bottom-right-radius: 50%;
+  				border-top-right-radius: 50%;
+			}
+			.table-hover {
+				float:left;
+			}
+			#calendar {
+				float:bottom;
+			}
+			#calendar > div {
+				width: calc(100% - 390px);
+				height: 300px;
+				min-width:450px;
+			}
+			#category > div{
+				border: solid 0.5px;
+				overflow: auto
+			}
+			#category ul {
+				list-style: none;
+				padding-left: 0px;
+				height: 300px;
+			}
+			#category li {
+				border-bottom: solid;
+				border-width: 0.5;
+				cursor: pointer;
+				font-size: 30px;
+			}
+			#category li.active {
+				font-weight: bold;
+				color: red;
+			}
+			@media (max-width: 1025px) {
+				#calendar > div {
+	    			position: Relative;
+	    			top: -30px;
+				}
+			}
+		</style>
+	</head>
+	<body>
+		<div id="main">
 			<div class="row">
-				<div class="col-xl-3 col-md-6">
-					<div class="card bg-primary text-white mb-4">
-						<div class="card-body">Primary Card</div>
-						<div
-							class="card-footer d-flex align-items-center justify-content-between">
-							<a class="small text-white stretched-link" href="#">게시판</a>
-							<div class="small text-white">
-								<i class="fas fa-angle-right"></i>
+				<div class="col-xs-12">
+					<div class="box-content">
+						<div class="clearfix">
+							<form action="<%=request.getContextPath()%>/search/list.do" method="get" class="form-horizontal" style="margin:0px">
+								<div class="input-group">
+									<input type="text" id="search" class="form-control" style="height:45px" name="search" placeholder="키워드를 입력해 주세요." />
+									<input type="hidden" name="page" value="1" />
+									<input type="hidden" id="duties" name="duties" />
+									<input type="hidden" id="area" name="area" />
+									<div class="input-group-btn">
+										<button type="submit" style="border:0px; padding:8px 25px; color:white" class="btn btn-primary"><span class="glyphicon glyphicon-search"></span></button>
+									</div>
+								</div>
+							</form>
+							<div id="category" style="margin-bottom:30px; height:300px">
+								<div class="col-xs-3">
+									<ul id="type0">
+										<li onclick="typeClick(this)">직종</li>
+										<li onclick="typeClick(this)">지역</li>
+									</ul>
+								</div>
+								<div class="col-xs-3">
+									<ul id="type1">
+
+									</ul>
+								</div>
+								<div class="col-xs-3">
+									<ul id="type2">
+
+									</ul>
+								</div>
+								<div class="col-xs-3">
+									<ul id="type3">
+
+									</ul>
+								</div>
+								<ul class="pager">
+									<li id="dutiesPager"></li>
+									<li id="areaPager"></li>
+								</ul>
+							</div>
+							<div style="padding-top:40px">
+								<span class="monthMove">
+									<span>
+										<Input type="button" onClick="monthMove(-1)" style="float:right; width:100px" value="◀" />
+									</span>
+									<span>${month}월</span>
+									<span>
+										<Input type="button" onClick="monthMove(+1)" style="float:left; width:100px" value="▶"/>
+									</span>
+								</span>
+								<span id="bigCalendar"></span>
+							</div>
+							<div>
+								<span id="smallCalendar"></span>
+								<div id="calendar" class="dropdown">
+									<div class="dropdown-menu dropdown-menu-right" onmouseover=mouseIn(null,null) onmouseout=mouseOut()>
+								      	<ul style="float:left; width:50%; padding:33px">
+								          	<li>내용1</li>
+								          	<li>내용2</li>
+								          	<li>내용3</li>
+								          	<li>내용4</li>
+								          	<li>내용5</li>
+							 	          	<li>내용6</li>
+								      	</ul>
+								      	<ul style="float:left; width:50%; padding:33px">
+								          	<li>내용7</li>
+								          	<li>내용8</li>
+								          	<li>내용9</li>
+								          	<li>내용10</li>
+								          	<li>내용11</li>
+								          	<li>내용12</li>
+								      	</ul>
+									</div>
+								</div>
 							</div>
 						</div>
 					</div>
-				</div>
-				<div class="col-xl-3 col-md-6">
-					<div class="card bg-warning text-white mb-4">
-						<div class="card-body">Warning Card</div>
-						<div
-							class="card-footer d-flex align-items-center justify-content-between">
-							<a class="small text-white stretched-link" href="#">View
-								Details</a>
-							<div class="small text-white">
-								<i class="fas fa-angle-right"></i>
-							</div>
-						</div>
-					</div>
-				</div>
-				<div class="col-xl-3 col-md-6">
-					<div class="card bg-success text-white mb-4">
-						<div class="card-body">Success Card</div>
-						<div
-							class="card-footer d-flex align-items-center justify-content-between">
-							<a class="small text-white stretched-link" href="#">View
-								Details</a>
-							<div class="small text-white">
-								<i class="fas fa-angle-right"></i>
-							</div>
-						</div>
-					</div>
-				</div>
-				<div class="col-xl-3 col-md-6">
-					<div class="card bg-danger text-white mb-4">
-						<div class="card-body">Danger Card</div>
-						<div
-							class="card-footer d-flex align-items-center justify-content-between">
-							<a class="small text-white stretched-link" href="#">View
-								Details</a>
-							<div class="small text-white">
-								<i class="fas fa-angle-right"></i>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-			<div class="row">
-				<div class="col-xl-6">
-					<div class="card mb-4">
-						<div class="card-header">
-							<i class="fas fa-chart-area me-1"></i> Area Chart Example
-						</div>
-						<div class="card-body">
-							<canvas id="myAreaChart" width="100%" height="40"></canvas>
-						</div>
-					</div>
-				</div>
-				<div class="col-xl-6">
-					<div class="card mb-4">
-						<div class="card-header">
-							<i class="fas fa-chart-bar me-1"></i> Bar Chart Example
-						</div>
-						<div class="card-body">
-							<canvas id="myBarChart" width="100%" height="40"></canvas>
-						</div>
-					</div>
-				</div>
-			</div>
-			<div class="card mb-4">
-				<div class="card-header">
-					<i class="fas fa-table me-1"></i> DataTable Example
-				</div>
-				<div class="card-body">
-					<table id="datatablesSimple">
-						<thead>
-							<tr>
-								<th>Name</th>
-								<th>Position</th>
-								<th>Office</th>
-								<th>Age</th>
-								<th>Start date</th>
-								<th>Salary</th>
-							</tr>
-						</thead>
-						<tfoot>
-							<tr>
-								<th>Name</th>
-								<th>Position</th>
-								<th>Office</th>
-								<th>Age</th>
-								<th>Start date</th>
-								<th>Salary</th>
-							</tr>
-						</tfoot>
-						<tbody>
-							<tr>
-								<td>Tiger Nixon</td>
-								<td>System Architect</td>
-								<td>Edinburgh</td>
-								<td>61</td>
-								<td>2011/04/25</td>
-								<td>$320,800</td>
-							</tr>
-							<tr>
-								<td>Garrett Winters</td>
-								<td>Accountant</td>
-								<td>Tokyo</td>
-								<td>63</td>
-								<td>2011/07/25</td>
-								<td>$170,750</td>
-							</tr>
-							<tr>
-								<td>Ashton Cox</td>
-								<td>Junior Technical Author</td>
-								<td>San Francisco</td>
-								<td>66</td>
-								<td>2009/01/12</td>
-								<td>$86,000</td>
-							</tr>
-							<tr>
-								<td>Cedric Kelly</td>
-								<td>Senior Javascript Developer</td>
-								<td>Edinburgh</td>
-								<td>22</td>
-								<td>2012/03/29</td>
-								<td>$433,060</td>
-							</tr>
-							<tr>
-								<td>Airi Satou</td>
-								<td>Accountant</td>
-								<td>Tokyo</td>
-								<td>33</td>
-								<td>2008/11/28</td>
-								<td>$162,700</td>
-							</tr>
-							<tr>
-								<td>Brielle Williamson</td>
-								<td>Integration Specialist</td>
-								<td>New York</td>
-								<td>61</td>
-								<td>2012/12/02</td>
-								<td>$372,000</td>
-							</tr>
-							<tr>
-								<td>Herrod Chandler</td>
-								<td>Sales Assistant</td>
-								<td>San Francisco</td>
-								<td>59</td>
-								<td>2012/08/06</td>
-								<td>$137,500</td>
-							</tr>
-							<tr>
-								<td>Rhona Davidson</td>
-								<td>Integration Specialist</td>
-								<td>Tokyo</td>
-								<td>55</td>
-								<td>2010/10/14</td>
-								<td>$327,900</td>
-							</tr>
-							<tr>
-								<td>Colleen Hurst</td>
-								<td>Javascript Developer</td>
-								<td>San Francisco</td>
-								<td>39</td>
-								<td>2009/09/15</td>
-								<td>$205,500</td>
-							</tr>
-							<tr>
-								<td>Sonya Frost</td>
-								<td>Software Engineer</td>
-								<td>Edinburgh</td>
-								<td>23</td>
-								<td>2008/12/13</td>
-								<td>$103,600</td>
-							</tr>
-							<tr>
-								<td>Jena Gaines</td>
-								<td>Office Manager</td>
-								<td>London</td>
-								<td>30</td>
-								<td>2008/12/19</td>
-								<td>$90,560</td>
-							</tr>
-							<tr>
-								<td>Quinn Flynn</td>
-								<td>Support Lead</td>
-								<td>Edinburgh</td>
-								<td>22</td>
-								<td>2013/03/03</td>
-								<td>$342,000</td>
-							</tr>
-							<tr>
-								<td>Charde Marshall</td>
-								<td>Regional Director</td>
-								<td>San Francisco</td>
-								<td>36</td>
-								<td>2008/10/16</td>
-								<td>$470,600</td>
-							</tr>
-							<tr>
-								<td>Haley Kennedy</td>
-								<td>Senior Marketing Designer</td>
-								<td>London</td>
-								<td>43</td>
-								<td>2012/12/18</td>
-								<td>$313,500</td>
-							</tr>
-							<tr>
-								<td>Tatyana Fitzpatrick</td>
-								<td>Regional Director</td>
-								<td>London</td>
-								<td>19</td>
-								<td>2010/03/17</td>
-								<td>$385,750</td>
-							</tr>
-							<tr>
-								<td>Michael Silva</td>
-								<td>Marketing Designer</td>
-								<td>London</td>
-								<td>66</td>
-								<td>2012/11/27</td>
-								<td>$198,500</td>
-							</tr>
-							<tr>
-								<td>Paul Byrd</td>
-								<td>Chief Financial Officer (CFO)</td>
-								<td>New York</td>
-								<td>64</td>
-								<td>2010/06/09</td>
-								<td>$725,000</td>
-							</tr>
-							<tr>
-								<td>Gloria Little</td>
-								<td>Systems Administrator</td>
-								<td>New York</td>
-								<td>59</td>
-								<td>2009/04/10</td>
-								<td>$237,500</td>
-							</tr>
-							<tr>
-								<td>Bradley Greer</td>
-								<td>Software Engineer</td>
-								<td>London</td>
-								<td>41</td>
-								<td>2012/10/13</td>
-								<td>$132,000</td>
-							</tr>
-							<tr>
-								<td>Dai Rios</td>
-								<td>Personnel Lead</td>
-								<td>Edinburgh</td>
-								<td>35</td>
-								<td>2012/09/26</td>
-								<td>$217,500</td>
-							</tr>
-							<tr>
-								<td>Jenette Caldwell</td>
-								<td>Development Lead</td>
-								<td>New York</td>
-								<td>30</td>
-								<td>2011/09/03</td>
-								<td>$345,000</td>
-							</tr>
-							<tr>
-								<td>Yuri Berry</td>
-								<td>Chief Marketing Officer (CMO)</td>
-								<td>New York</td>
-								<td>40</td>
-								<td>2009/06/25</td>
-								<td>$675,000</td>
-							</tr>
-							<tr>
-								<td>Caesar Vance</td>
-								<td>Pre-Sales Support</td>
-								<td>New York</td>
-								<td>21</td>
-								<td>2011/12/12</td>
-								<td>$106,450</td>
-							</tr>
-							<tr>
-								<td>Doris Wilder</td>
-								<td>Sales Assistant</td>
-								<td>Sidney</td>
-								<td>23</td>
-								<td>2010/09/20</td>
-								<td>$85,600</td>
-							</tr>
-							<tr>
-								<td>Angelica Ramos</td>
-								<td>Chief Executive Officer (CEO)</td>
-								<td>London</td>
-								<td>47</td>
-								<td>2009/10/09</td>
-								<td>$1,200,000</td>
-							</tr>
-							<tr>
-								<td>Gavin Joyce</td>
-								<td>Developer</td>
-								<td>Edinburgh</td>
-								<td>42</td>
-								<td>2010/12/22</td>
-								<td>$92,575</td>
-							</tr>
-							<tr>
-								<td>Jennifer Chang</td>
-								<td>Regional Director</td>
-								<td>Singapore</td>
-								<td>28</td>
-								<td>2010/11/14</td>
-								<td>$357,650</td>
-							</tr>
-							<tr>
-								<td>Brenden Wagner</td>
-								<td>Software Engineer</td>
-								<td>San Francisco</td>
-								<td>28</td>
-								<td>2011/06/07</td>
-								<td>$206,850</td>
-							</tr>
-							<tr>
-								<td>Fiona Green</td>
-								<td>Chief Operating Officer (COO)</td>
-								<td>San Francisco</td>
-								<td>48</td>
-								<td>2010/03/11</td>
-								<td>$850,000</td>
-							</tr>
-							<tr>
-								<td>Shou Itou</td>
-								<td>Regional Marketing</td>
-								<td>Tokyo</td>
-								<td>20</td>
-								<td>2011/08/14</td>
-								<td>$163,000</td>
-							</tr>
-							<tr>
-								<td>Michelle House</td>
-								<td>Integration Specialist</td>
-								<td>Sidney</td>
-								<td>37</td>
-								<td>2011/06/02</td>
-								<td>$95,400</td>
-							</tr>
-							<tr>
-								<td>Suki Burks</td>
-								<td>Developer</td>
-								<td>London</td>
-								<td>53</td>
-								<td>2009/10/22</td>
-								<td>$114,500</td>
-							</tr>
-							<tr>
-								<td>Prescott Bartlett</td>
-								<td>Technical Author</td>
-								<td>London</td>
-								<td>27</td>
-								<td>2011/05/07</td>
-								<td>$145,000</td>
-							</tr>
-							<tr>
-								<td>Gavin Cortez</td>
-								<td>Team Leader</td>
-								<td>San Francisco</td>
-								<td>22</td>
-								<td>2008/10/26</td>
-								<td>$235,500</td>
-							</tr>
-							<tr>
-								<td>Martena Mccray</td>
-								<td>Post-Sales support</td>
-								<td>Edinburgh</td>
-								<td>46</td>
-								<td>2011/03/09</td>
-								<td>$324,050</td>
-							</tr>
-							<tr>
-								<td>Unity Butler</td>
-								<td>Marketing Designer</td>
-								<td>San Francisco</td>
-								<td>47</td>
-								<td>2009/12/09</td>
-								<td>$85,675</td>
-							</tr>
-							<tr>
-								<td>Howard Hatfield</td>
-								<td>Office Manager</td>
-								<td>San Francisco</td>
-								<td>51</td>
-								<td>2008/12/16</td>
-								<td>$164,500</td>
-							</tr>
-							<tr>
-								<td>Hope Fuentes</td>
-								<td>Secretary</td>
-								<td>San Francisco</td>
-								<td>41</td>
-								<td>2010/02/12</td>
-								<td>$109,850</td>
-							</tr>
-							<tr>
-								<td>Vivian Harrell</td>
-								<td>Financial Controller</td>
-								<td>San Francisco</td>
-								<td>62</td>
-								<td>2009/02/14</td>
-								<td>$452,500</td>
-							</tr>
-							<tr>
-								<td>Timothy Mooney</td>
-								<td>Office Manager</td>
-								<td>London</td>
-								<td>37</td>
-								<td>2008/12/11</td>
-								<td>$136,200</td>
-							</tr>
-							<tr>
-								<td>Jackson Bradshaw</td>
-								<td>Director</td>
-								<td>New York</td>
-								<td>65</td>
-								<td>2008/09/26</td>
-								<td>$645,750</td>
-							</tr>
-							<tr>
-								<td>Olivia Liang</td>
-								<td>Support Engineer</td>
-								<td>Singapore</td>
-								<td>64</td>
-								<td>2011/02/03</td>
-								<td>$234,500</td>
-							</tr>
-							<tr>
-								<td>Bruno Nash</td>
-								<td>Software Engineer</td>
-								<td>London</td>
-								<td>38</td>
-								<td>2011/05/03</td>
-								<td>$163,500</td>
-							</tr>
-							<tr>
-								<td>Sakura Yamamoto</td>
-								<td>Support Engineer</td>
-								<td>Tokyo</td>
-								<td>37</td>
-								<td>2009/08/19</td>
-								<td>$139,575</td>
-							</tr>
-							<tr>
-								<td>Thor Walton</td>
-								<td>Developer</td>
-								<td>New York</td>
-								<td>61</td>
-								<td>2013/08/11</td>
-								<td>$98,540</td>
-							</tr>
-							<tr>
-								<td>Finn Camacho</td>
-								<td>Support Engineer</td>
-								<td>San Francisco</td>
-								<td>47</td>
-								<td>2009/07/07</td>
-								<td>$87,500</td>
-							</tr>
-							<tr>
-								<td>Serge Baldwin</td>
-								<td>Data Coordinator</td>
-								<td>Singapore</td>
-								<td>64</td>
-								<td>2012/04/09</td>
-								<td>$138,575</td>
-							</tr>
-							<tr>
-								<td>Zenaida Frank</td>
-								<td>Software Engineer</td>
-								<td>New York</td>
-								<td>63</td>
-								<td>2010/01/04</td>
-								<td>$125,250</td>
-							</tr>
-							<tr>
-								<td>Zorita Serrano</td>
-								<td>Software Engineer</td>
-								<td>San Francisco</td>
-								<td>56</td>
-								<td>2012/06/01</td>
-								<td>$115,000</td>
-							</tr>
-							<tr>
-								<td>Jennifer Acosta</td>
-								<td>Junior Javascript Developer</td>
-								<td>Edinburgh</td>
-								<td>43</td>
-								<td>2013/02/01</td>
-								<td>$75,650</td>
-							</tr>
-							<tr>
-								<td>Cara Stevens</td>
-								<td>Sales Assistant</td>
-								<td>New York</td>
-								<td>46</td>
-								<td>2011/12/06</td>
-								<td>$145,600</td>
-							</tr>
-							<tr>
-								<td>Hermione Butler</td>
-								<td>Regional Director</td>
-								<td>London</td>
-								<td>47</td>
-								<td>2011/03/21</td>
-								<td>$356,250</td>
-							</tr>
-							<tr>
-								<td>Lael Greer</td>
-								<td>Systems Administrator</td>
-								<td>London</td>
-								<td>21</td>
-								<td>2009/02/27</td>
-								<td>$103,500</td>
-							</tr>
-							<tr>
-								<td>Jonas Alexander</td>
-								<td>Developer</td>
-								<td>San Francisco</td>
-								<td>30</td>
-								<td>2010/07/14</td>
-								<td>$86,500</td>
-							</tr>
-							<tr>
-								<td>Shad Decker</td>
-								<td>Regional Director</td>
-								<td>Edinburgh</td>
-								<td>51</td>
-								<td>2008/11/13</td>
-								<td>$183,000</td>
-							</tr>
-							<tr>
-								<td>Michael Bruce</td>
-								<td>Javascript Developer</td>
-								<td>Singapore</td>
-								<td>29</td>
-								<td>2011/06/27</td>
-								<td>$183,000</td>
-							</tr>
-							<tr>
-								<td>Donna Snider</td>
-								<td>Customer Support</td>
-								<td>New York</td>
-								<td>27</td>
-								<td>2011/01/25</td>
-								<td>$112,000</td>
-							</tr>
-						</tbody>
-					</table>
 				</div>
 			</div>
 		</div>
-	</main>
-</body>
+		
+		<script type="text/javascript">
+			$(function(){
+				let nowYear = ${nowYear};
+				let nowMonth = ${nowMonth};
+				let nowDay = ${nowDay};
+				
+				let year = ${year};
+				let month = ${month};
+				
+				let yOptions = "<select id='year' name='year' onchange='formCalendar(this.form)'>";
+				let test = 1;
+				for (let year_ = (nowYear - 10); year_ <= (nowYear + 10); year_++) {
+					if (year_ === year) {
+						yOptions += '<option value='+year_+' selected="selected">'+year_+'</option>';
+					} else {
+						yOptions += '<option value='+year_+'>'+year_+'</option>';
+					}
+				}
+				yOptions += "</select>년";
+				$("#yOptions").html(yOptions);
+	
+				let mOptions = "<select id='month' name='month' onchange='formCalendar(this.form)'>";
+				for (let month_ = 1; month_ <= 12; month_++) {
+					if (month_ === month) {
+						mOptions += '<option value='+month_+' selected="selected">'+month_+'</option>';
+					} else {
+						mOptions += '<option value='+month_+'>'+month_+'</option>';
+					}
+				}
+				mOptions += "</select>월";
+				$("#mOptions").html(mOptions);
+				
+				let months = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+				if (Math.floor(year % 4) === 0 && Math.floor(year % 100) != 0 || Math.floor(year % 400) === 0) {
+					months[1] = 29;
+				}
+	
+				let nalsu = (year - 1) * 365 + (year - 1) / 4 - (year - 1) / 100 + (year - 1) / 400;
+				for (let i = 0; i < (month - 1); i++) {
+					nalsu += months[i];
+				}
+				nalsu += 1;
+	
+				let dayOfWeek = ["일", "월", "화", "수", "목", "금", "토"];
+				let week = Math.floor(nalsu % dayOfWeek.length);
+				let lastDay = months[month - 1];
+				let previousMonthLastDay;
+				if (month === 1) {
+					previousMonthLastDay = months[11];
+				} else {
+					previousMonthLastDay = months[month - 2];
+				}
+	
+				let bigCalendar = "<table class='table table-hover-large' style='height:700px'><thead><tr>";
+				for (let i = 0; i < dayOfWeek.length; i++) {
+					if (i === 0) {
+						bigCalendar += "<th class='sun'>";
+					} else if (i === 6) {
+						bigCalendar += "<th class='sat'>";
+					} else {
+						bigCalendar += "<th>";
+					}
+					bigCalendar += dayOfWeek[i] + "</th>";
+				}
+				bigCalendar += "</tr></thead><tbody><tr>";
+				for (let i = 1; i <= week; i++) {
+					bigCalendar += "<td class='nan'>" + (previousMonthLastDay - week + i)
+							+ "<p style='color:black'>내용입니다.내용입니다.내용입니다.내용입니다.내용입니다.</p></td>";
+				}
+				let weekCount = week;
+				for (let i = 1; i <= lastDay; i++, weekCount++) {
+					if (Math.floor(weekCount % dayOfWeek.length) === 6) {
+						bigCalendar += "<td class='sat ";
+					} else if (Math.floor(weekCount % dayOfWeek.length) === 0) {
+						weekCount = 0;
+						bigCalendar += "<td class='sun ";
+					} else {
+						bigCalendar += "<td class='";
+					}
+					if (year === nowYear && month === nowMonth && i === nowDay) {
+						bigCalendar += "now'>";
+					} else {
+						bigCalendar += "'>";
+					}
+					bigCalendar += i + "<p style='color:black'>내용입니다.내용입니다.내용입니다.내용입니다.내용입니다.</p></td>";
+					if (Math.floor(weekCount % dayOfWeek.length) === 6) {
+						bigCalendar += "</tr><tr>";
+					}
+				}
+				for (let i = 1; i <= dayOfWeek.length - weekCount; i++) {
+					bigCalendar += "<td class='nan'>" + i + "<p style='color:black'>내용입니다.내용입니다.내용입니다.내용입니다.내용입니다.</p></td>";
+				}
+				bigCalendar += "</tr>";
+				$("#bigCalendar").html(bigCalendar);
+	
+				let date;
+				let month_;
+				if (month === 1) {
+					date = String(year - 1);
+					month_ = "12";
+				} else {
+					date = String(year);
+					month_ = String(month - 1);
+				}
+				if (month_.length <= 1) {
+					date += "0";
+				}
+				date += month_;
+	
+				let firstDate = date;
+				let day = String(previousMonthLastDay - week + 1);
+				if (day.length <= 1) {
+					firstDate += "0";
+				}
+				firstDate += day;
+	
+				date = String(year);
+				month_ = String(month);
+				if (month_.length <= 1) {
+					date += "0";
+				}
+				date += month_;
+	
+				let lastDate = date;
+				day = String(dayOfWeek.length - week);
+				if (day.length <= 1) {
+					lastDate += "0";
+				}
+				lastDate += day;
+	
+				let smallCalendar = "<table class='table table-hover' style='width:400px;height:300p'><thead><tr>";
+				for (let i = 0; i < dayOfWeek.length; i++) {
+					if (i === 0) {
+						smallCalendar += "<th class='sun'>";
+					} else if (i === 6) {
+						smallCalendar += "<th class='sat'>";
+					} else {
+						smallCalendar += "<th>";
+					}
+					smallCalendar += dayOfWeek[i] + "</th>";
+				}
+				smallCalendar += "</tr></thead><tbody><tr onmouseover=mouseIn(" + firstDate + "," + lastDate
+						+ ") onmouseout=mouseOut()>";
+				for (let i = 1; i <= week; i++) {
+					smallCalendar += "<td class='nan'>" + (previousMonthLastDay - week + i) + "</td>";
+				}
+				weekCount = week;
+				for (let i = 1; i <= lastDay; i++, weekCount++) {
+					if (Math.floor(weekCount % dayOfWeek.length) === 6) {
+						smallCalendar += "<td class='sat ";
+					} else if (Math.floor(weekCount % dayOfWeek.length) === 0) {
+						weekCount = 0;
+						smallCalendar += "<td class='sun ";
+					} else {
+						smallCalendar += "<td class='";
+					}
+					if (year === nowYear && month === nowMonth && i === nowDay) {
+						smallCalendar += "now'>";
+					} else {
+						smallCalendar += "'>";
+					}
+					smallCalendar += i + "</td>";
+					if (Math.floor(weekCount % dayOfWeek.length) === 6) {
+						firstDate = date;
+						day = String(i + 1);
+						if (day.length <= 1) {
+							firstDate += "0";
+						}
+						firstDate += day;
+	
+						if (i + dayOfWeek.length > lastDay) {
+							if (month === 12) {
+								date = String(year + 1);
+								month_ = "1";
+							} else {
+								date = String(year);
+								month_ = String(month + 1);
+							}
+							if (month_.length <= 1) {
+								date += "0";
+							}
+							date += month_;
+	
+							lastDate = date;
+							day = String((i + dayOfWeek.length) - lastDay);
+						} else {
+							lastDate = date;
+							day = String(i + dayOfWeek.length);
+						}
+						if (day.length <= 1) {
+							lastDate += "0";
+						}
+						lastDate += day;
+						smallCalendar += "</tr><tr onmouseover=mouseIn(" + firstDate + "," + lastDate + ") onmouseout=mouseOut()>";
+					}
+				}
+				for (let i = 1; i <= dayOfWeek.length - weekCount; i++) {
+					smallCalendar += "<td class='nan'>" + i + "</td>";
+				}
+				smallCalendar += "</tr></tbody></table>";
+				$("#smallCalendar").html(smallCalendar);
+			});
+		
+		   	const formCalendar=(obj)=>{
+		      	obj.submit();
+		   	}
+		   	
+			const mouseIn=(firstDate, lastDate)=>{
+				$("#calendar").addClass("open");
+				if(firstDate != null && lastDate != null){
+					let list = $("#calendar").find("li");
+					list.each(function() {
+						    $(this).text(firstDate + "~" + lastDate);
+						});
+				}
+			}
+			
+			const mouseOut=()=>{
+				$("#calendar").removeClass("open");
+			}
+			
+			const monthMove=(num)=>{
+				let year = ${year};
+				let month = ${month};
+				month += num;
+				if(month === 0){
+					month = 12;
+					year -= 1;
+				}else if(month === 13){
+					month = 1;
+					year += 1;
+				}
+	
+				let uri = "${requestScope['javax.servlet.forward.request_uri']}";
+				let form = $("<form></form>");
+				form.attr("action", uri);
+				form.attr("method", "get");
+				form.appendTo("body");
+				let year_ = $("<input type='hidden' name='year' value="+year+" />");
+				let month_ = $("<input type='hidden' name='month' value="+month+" />");
+				form.append(year_);
+				form.append(month_);
+				form.submit();
+			}
+			
+			let type0, type1, type2;
+			let duties = "", area = "";
+			const typeClick=(obj)=>{
+				$(obj).siblings().removeClass("active");
+				$(obj).addClass("active");
+				
+				let targetId = $(obj).closest("ul").attr("id");
+				let next = true;
+				if(targetId === "type3"){
+					duties = $(obj).text();
+					next = false;
+				}else {
+					if(targetId === "type2"){
+						if(type0 === "직종"){
+							nextTarget = "type3"
+						}else{
+							area = $(obj).text();
+							next = false;
+						}
+						type2 = $(obj).text();
+					}else{
+						if(targetId === "type1"){
+							nextTarget = "type2"
+							type1 = $(obj).text();
+						}else{
+							nextTarget = "type1"
+							type0 = $(obj).text();
+							type1 = "";
+							$("#type2").html("");
+						}
+						type2 = "";
+						$("#type3").html("");
+						if(type0 === "지역"){
+							area = "";
+						}
+					}
+					if(type0 === "직종"){
+						duties = "";
+					}
+				}
+				$("#duties").val(duties);
+				$("#area").val(area);
+				if(duties != ""){
+					$("#dutiesPager").html("<a href='#'>"+duties+"</a>");
+				}else{
+					$("#dutiesPager").html(duties);
+				}
+				if(area != ""){
+					$("#areaPager").html("<a href='#'>"+area+"</a>");
+				}else{
+					$("#areaPager").html(area);
+				}
+				
+				if(next){
+					let uri = "<%=request.getContextPath()%>/main/json.do";
+					let type = 
+						"type0=" + type0+
+						"&type1=" + type1+
+						"&type2=" + type2;
+					
+					$.ajax({
+						url : uri,
+						type : "GET",
+						data : type,
+						success : function(response) {
+							if(response != ""){
+								response = JSON.parse(response);
+								let html = "";
+								$(response).each(function(index, category) {
+									html += `<li onclick="typeClick(this)">`+category.name+`</li>`;
+								});
+								$("#"+nextTarget).html(html);
+							}
+						},
+						error : function(request, status, error) {
+							console.log("code:" + request.status + "\n" + "message:"
+									+ request.responseText + "\n" + "error:" + error);
+							alert("에러가 발생하였습니다.");
+						}
+					});
+				}
+			}
+		</script>
+	</body>
 </html>

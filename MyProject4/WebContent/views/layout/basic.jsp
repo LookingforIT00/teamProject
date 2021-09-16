@@ -18,11 +18,9 @@
 <link href="<c:url value="/css/basic-bootstrap.css" />" rel="stylesheet" />
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nanum+Pen+Script&display=swap">
 <link rel="stylesheet" href="<c:url value="/plugin/jquery-ui-1.12.0/jquery-ui.min.css" />">
-<link rel="stylesheet" href="<c:url value="/plugin/bootstrap/css/bootstrap.min.css" />">
 <link rel="stylesheet" href="<c:url value="/css/style.css" />">
 <script src="<c:url value="/js/jquery.min.js" />"></script>
 <script src="<c:url value="/plugin/jquery-ui-1.12.0/jquery-ui.min.js" />"></script>
-<script src="<c:url value="/plugin/bootstrap/js/bootstrap.min.js" />"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js"></script>
 <script src="<c:url value="/js/scripts.js" />"></script>
