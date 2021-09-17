@@ -130,7 +130,7 @@ public class MemberDAO {
 		  {
 			  getConnection();
 			  String sql="INSERT INTO member VALUES(?,?,?,?,?,"
-					   +"?,?,?,?,?,'n')"; // admin(n=일반,y=관리자)
+					   +"?,?,?,?,?,?,?,'n')"; // admin(n=일반,y=관리자)
 			  ps=conn.prepareStatement(sql);
 			  ps.setString(1, vo.getId());
 			  ps.setString(2, vo.getPwd());
@@ -189,6 +189,7 @@ public class MemberDAO {
 				  String name=rs.getString(2);
 				  String admin=rs.getString(3);
 				  rs.close();
+				  
 				  if(db_pwd.equals(pwd))
 				  {
 					  result=name+"|"+admin;
@@ -208,7 +209,177 @@ public class MemberDAO {
 		  }
 		  return result;
 	  }
-	  // 회원수정 
+	  
+	  // 회원 수정
+	  public boolean memberJoinUpdate(MemberVO vo)
+	  {
+		  boolean bCheck=false;
+		  try
+		  {
+			  getConnection();
+			  String sql="SELECT pwd FROM member "
+					    +"WHERE id=?";
+			  ps=conn.prepareStatement(sql);
+			  ps.setString(1, vo.getId());
+			  ResultSet rs=ps.executeQuery();
+			  rs.next();
+			  String db_pwd=rs.getString(1);
+			  rs.close();
+			  if(db_pwd.equals(vo.getPwd()))
+			  {
+				  bCheck=true;
+				  sql="UPDATE member SET "
+					 +"name=?,sex=?,birthday=?,post=?,addr1=?,addr2=?,"
+				     +"email=?,tel=?, hope_region=?, hope_job=?"
+					 +"WHERE id=?";
+				  ps=conn.prepareStatement(sql);
+				  ps.setString(1, vo.getName());
+				  ps.setString(2, vo.getSex());
+				  ps.setString(3, vo.getBirthday());
+				  ps.setString(4, vo.getPost());
+				  ps.setString(5, vo.getAddr1());
+				  ps.setString(6, vo.getAddr2());
+				  ps.setString(7, vo.getEmail());
+				  ps.setString(8, vo.getTel());
+				  ps.setString(9, vo.getId());
+				  ps.setString(10, vo.getHope_region());
+				  ps.setString(10, vo.getHope_job());
+				  ps.executeUpdate();
+			  }
+			  else
+			  {
+				  bCheck=false;
+			  }
+		  }catch(Exception ex)
+		  {
+			  ex.printStackTrace();
+		  }
+		  finally
+		  {
+			  disConnection();
+		  }
+		  return bCheck;
+	  }
 	  // 회원탈퇴
+	  public boolean memberJoinDelete(String id,String pwd)
+	  {
+		  boolean bCheck=false;
+		  try
+		  {
+			  getConnection();
+			  String sql="SELECT pwd FROM member "
+					    +"WHERE id=?";
+			  ps=conn.prepareStatement(sql);
+			  ps.setString(1, id);
+			  ResultSet rs=ps.executeQuery();
+			  rs.next();
+			  String db_pwd=rs.getString(1);
+			  rs.close();
+			  if(db_pwd.equals(pwd))
+			  {
+				  bCheck=true;
+				  sql="DELETE FROM member "
+					 +"WHERE id=?";
+				  ps=conn.prepareStatement(sql);
+				  ps.setString(1,id);
+				  ps.executeUpdate();
+			  }
+			  else
+			  {
+				  bCheck=false;
+			  }
+		  }catch(Exception ex)
+		  {
+			  ex.printStackTrace();
+		  }
+		  finally
+		  {
+			  disConnection();
+		  }
+		  return bCheck;
+	  }
 	  // 아이디찾기 , 비밀번호찾기 
+	  public String member_idfind_email(String email)
+	  {
+		   String result="";
+		   try
+		   {
+			   getConnection();
+			   String sql="SELECT COUNT(*) FROM member "
+					     +"WHERE email=?";
+			   ps=conn.prepareStatement(sql);
+			   ps.setString(1, email);
+			   ResultSet rs=ps.executeQuery();
+			   rs.next();
+			   int count=rs.getInt(1);
+			   rs.close();
+			   
+			   if(count==0)
+			   {
+				   result="no";
+			   }
+			   else
+			   {
+				   sql="SELECT RPAD(SUBSTR(id,1,1),LENGTH(id),'*') FROM member "
+					  +"WHERE email=?";
+				   ps=conn.prepareStatement(sql);
+				   ps.setString(1, email);
+				   rs=ps.executeQuery();
+				   rs.next();
+				   result=rs.getString(1);
+				   rs.close();
+			   }
+			   
+		   }catch(Exception ex)
+		   {
+			   ex.printStackTrace();
+		   }
+		   finally
+		   {
+			   disConnection();
+		   }
+		   return result;
+	  }
+	  public String member_idfind_tel(String tel)
+	  {
+		   String result="";
+		   try
+		   {
+			   getConnection();
+			   String sql="SELECT COUNT(*) FROM member "
+					     +"WHERE tel=?";
+			   ps=conn.prepareStatement(sql);
+			   ps.setString(1, tel);
+			   ResultSet rs=ps.executeQuery();
+			   rs.next();
+			   int count=rs.getInt(1);
+			   rs.close();
+			   
+			   if(count==0)
+			   {
+				   result="no";
+			   }
+			   else
+			   {
+				   sql="SELECT RPAD(SUBSTR(id,1,1),LENGTH(id),'*') FROM member "
+					  +"WHERE tel=?";
+				   ps=conn.prepareStatement(sql);
+				   ps.setString(1, tel);
+				   rs=ps.executeQuery();
+				   rs.next();
+				   result=rs.getString(1);
+				   rs.close();
+			   }
+			   
+		   }catch(Exception ex)
+		   {
+			   ex.printStackTrace();
+		   }
+		   finally
+		   {
+			   disConnection();
+		   }
+		   return result;
+	  }
+	  
 	}

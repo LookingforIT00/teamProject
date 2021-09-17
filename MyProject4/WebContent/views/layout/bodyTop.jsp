@@ -6,6 +6,7 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<script type="text/javascript" src="http://code.jquery.com/jquery.js"></script>
 <script type="text/javascript">
 $(function(){
 	// 로그인 처리
@@ -57,6 +58,7 @@ $(function(){
 	})
 });
 </script>
+
 </head>
 <body>
 <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
@@ -112,6 +114,31 @@ $(function(){
             </ul>
         </li>
     </ul>
+</nav>
+</div>
+
+<div class="wrapper row2">
+  <nav id="mainav" class="clear"> 
+  
+    <!-- ################################################################################################ -->
+    <ul class="clear">
+      <li class="active"><a href="../main/main.do">홈</a></li>
+      <li><a class="drop" href="#">회원</a>
+        <c:if test="${sessionScope.id==null }"><%--로그인이 안된 상태 --%>
+	        <ul>
+	          <li><a href="../member/join.do">회원가입</a></li>
+	          <li><a href="../member/idfind.do">아이디찾기</a></li>
+	          <li><a href="pages/sidebar-left.html">비밀번호찾기</a></li>
+	        </ul>
+        </c:if>
+        <c:if test="${sessionScope.id!=null }"><%--로그인이 된 상태 --%>
+	        <ul>
+	          <li><a href="../member/join_update.do">회원수정</a></li>
+	          <li><a href="../member/join_delete.do">회원탈퇴</a></li>
+	        </ul>
+        </c:if>
+      </li>
+</ul>
 </nav>
 </div>
 </body>

@@ -34,9 +34,9 @@
                         </a>
                         <div class="collapse" id="pagesCollapseAuth" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordionPages">
                             <nav class="sb-sidenav-menu-nested nav">
-                            <a href="<%=request.getContextPath()%>/member/join.do">1회원가입</a>
-                                <a class="nav-link" href="../views/member/join.do">회원가입</a>
-                                <a class="nav-link" href="register.html">아이디 찾기</a>
+                            <%-- <a href="<%=request.getContextPath()%>/member/join.do">회원가입</a> --%>
+                                <a class="nav-link" href="/member/join.do">회원가입</a>
+                                <a class="nav-link" href="/member/idfind.do">아이디 찾기</a>
                                 <a class="nav-link" href="password.html">비밀번호 찾기</a>
                             </nav>
                         </div>
