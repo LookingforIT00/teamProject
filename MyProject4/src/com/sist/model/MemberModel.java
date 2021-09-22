@@ -101,7 +101,7 @@ public class MemberModel {
 	  MemberDAO dao=MemberDAO.newInstance();
 	  dao.memberJoinInsert(vo);
 //	  return "redirect:../main/main.do";
-	  return "redirect:../views/index.do"; // main에서 회원가입 데이터가 필요가 없다 (request초기화)
+	  return "redirect:../main/view.do"; // main에서 회원가입 데이터가 필요가 없다 (request초기화)
 	  // sendRedirect() ==> DispatcherServlet => redirect:
   }
   // 회원 가입 , 로그인 , 예매/예약 , 검색  , 추천 (통계)  => 페이지기법 
@@ -138,14 +138,14 @@ public class MemberModel {
   {
 	  HttpSession session=request.getSession();
 	  session.invalidate(); // 데이터 전체 삭제
-	  return "redirect:../views/index.do";
+	  return "redirect:../main/view.do";
   }
   // id찾기
   @RequestMapping("member/idfind.do")
   public String member_idfind(HttpServletRequest request,HttpServletResponse response)
   {
 	  request.setAttribute("uri", "/member/idfind.jsp");
-	  return "/views/index.jsp";
+	  return "../views/index.jsp";
   }
 /*  
   @RequestMapping("member/join_update.do")
