@@ -143,8 +143,8 @@ public class MemberDAO {
 			  ps.setString(8, vo.getAddr1());
 			  ps.setString(9, vo.getAddr2());
 			  ps.setString(10, vo.getTel());
-			  ps.setString(10, vo.getHope_region());
-			  ps.setString(10, vo.getHope_job());
+			  ps.setString(11, vo.getHope_region());
+			  ps.setString(12, vo.getHope_job());
 			  
 			  ps.executeUpdate();
 		  }catch(Exception ex)
@@ -241,9 +241,9 @@ public class MemberDAO {
 				  ps.setString(6, vo.getAddr2());
 				  ps.setString(7, vo.getEmail());
 				  ps.setString(8, vo.getTel());
-				  ps.setString(9, vo.getId());
-				  ps.setString(10, vo.getHope_region());
+				  ps.setString(9, vo.getHope_region());
 				  ps.setString(10, vo.getHope_job());
+				  ps.setString(11, vo.getId());
 				  ps.executeUpdate();
 			  }
 			  else

@@ -28,7 +28,7 @@ $(function(){
 		}
 		$.ajax({
 			type:'post',
-			url:'../member/postfind.do', 
+			url:'../views/member/postfind.do', 
 			data:{"dong":dong},
 			success:function(res) 
 			{

@@ -19,35 +19,39 @@
 <script type="text/javascript">
 $(function(){
 	$('#idcheckBtn').click(function(){
+		// id입력 확인
 		let id=$("#id").val();
 		if(id.trim()=="")
 		{
 			$('#id').focus();
 			return;
 		}
+		// 요청처리 , 응답처리를 동시에 한다 
 		$.ajax({
 			type:'POST',
 			url:'../member/idcheck.do',
-			data:{"id":id}, 
+			data:{"id":id}, // 데이터 전송 idcheck.do?id=hong
 					
-			success:function(res) 
+			// res = idcheck_result에 출력했던 내용
+			success:function(res) //정상수행시에 => res는 실행된 모든 데이터를 읽어온다 
 			{
-				let count=res.trim();
-				if(count==0) 
+				let count=res.trim();// 출력된 숫자를 받는다 (0,1)
+				if(count==0) //id가 없는 경우
 				{
 					$('#result').html('<span style="color:blue">'+id+'는(은) 사용가능합니다</span>');
-					$('#ok').show();
+					$('#ok').show(); // 확인 버튼 출력 
 				}
-				else
+				else //id가 있는 경우
 				{
 					$('#result').html('<span style="color:red">'+id+'는(은) 이미 사용중입니다</span>');
 				}
 			}
 		})
 	})
-	$('#okBtn').click(function(){
-		parent.joinFrm.id.value=$('#id').val();송
-		parent.Shadowbox.close();
+	$('#okBtn').click(function(){ // okBtn 눌렀을 때 처리
+		parent.joinFrm.id.value=$('#id').val();// 사용가능한 id를 회원가입창에 전송
+     // parent = join.jsp / joinFrm = join.jsp의 form / value = form안의 name=id의 id
+		parent.Shadowbox.close();// Shadowbox 닫기 
 	})
 })
 </script>

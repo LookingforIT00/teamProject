@@ -16,8 +16,9 @@ public class MemberModel {
   public String member_join(HttpServletRequest request,HttpServletResponse response)
   {
 //    request.setAttribute("uri", "../member/join.jsp"); 
-	  request.setAttribute("uri", "/views/member/join.jsp");
-	  return "/views/index.jsp";
+	  request.setAttribute("uri", "../member/join.jsp");
+//	  return "../main/main.jsp";
+	  return "../views/index.jsp";
   }
   
   @RequestMapping("member/idcheck.do")
@@ -79,7 +80,9 @@ public class MemberModel {
 	  String addr1=request.getParameter("addr1");
 	  String addr2=request.getParameter("addr2");
 	  String tel1=request.getParameter("tel1");// UNIQUE => 아이디 찾기 (후보키)
-	  String tel2=request.getParameter("tel2");//
+	  String tel2=request.getParameter("tel2");
+	  String hope_region=request.getParameter("hope_region");
+	  String hope_job=request.getParameter("hope_job");
 	  
 	  MemberVO vo=new MemberVO();
 	  vo.setId(id);
@@ -92,10 +95,13 @@ public class MemberModel {
 	  vo.setAddr1(addr1);
 	  vo.setAddr2(addr2);
 	  vo.setTel(tel1+"-"+tel2);
+	  vo.setHope_region(hope_region);
+	  vo.setHope_job(hope_job);
 	  // DAO로 전송 
 	  MemberDAO dao=MemberDAO.newInstance();
 	  dao.memberJoinInsert(vo);
-	  return "redirect:../views/index.do";// main에서 회원가입 데이터가 필요가 없다 (request초기화)
+//	  return "redirect:../main/main.do";
+	  return "redirect:../views/index.do"; // main에서 회원가입 데이터가 필요가 없다 (request초기화)
 	  // sendRedirect() ==> DispatcherServlet => redirect:
   }
   // 회원 가입 , 로그인 , 예매/예약 , 검색  , 추천 (통계)  => 페이지기법 
@@ -138,7 +144,7 @@ public class MemberModel {
   @RequestMapping("member/idfind.do")
   public String member_idfind(HttpServletRequest request,HttpServletResponse response)
   {
-	  request.setAttribute("uri", "/views/member/idfind.jsp");
+	  request.setAttribute("uri", "/member/idfind.jsp");
 	  return "/views/index.jsp";
   }
 /*  
@@ -218,7 +224,7 @@ public class MemberModel {
   @RequestMapping("member/join_delete.do")
   public String member_join_delete(HttpServletRequest request,HttpServletResponse response)
   {
-	  request.setAttribute("uri", "/views/member/join_delete.jsp");
+	  request.setAttribute("uri", "/member/join_delete.jsp");
 	  return "/views/index.jsp";
   }
   @RequestMapping("member/join_delete_ok.do")
@@ -252,6 +258,6 @@ public class MemberModel {
 	  MemberDAO dao=MemberDAO.newInstance();
 	  String s=dao.member_idfind_tel(tel);
 	  request.setAttribute("result", s);
-	  return "../member/idfind_tel.jsp";
+	  return ".../member/idfind_tel.jsp";
   }
 }
