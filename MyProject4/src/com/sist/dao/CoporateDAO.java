@@ -40,7 +40,8 @@ public class CoporateDAO {
 				ps.close();
 			if (conn != null)
 				conn.close();
-		} catch (Exception ex) {
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
 	}
 
@@ -67,5 +68,34 @@ public class CoporateDAO {
 		} finally {
 			disConnection();
 		}
+	}
+
+	public CoporateVO selectCoporate(String coName) {
+		CoporateVO vo = new CoporateVO();
+		try {
+			getConnection();
+			String sql = "select co_name, co_type, co_scale, co_year, co_sales, co_link, co_workers "
+					+ "from coporateData "
+					+ "where co_name=?";
+			ps = conn.prepareStatement(sql);
+			ps.setString(1, coName);
+			ResultSet rs = ps.executeQuery();
+			if (rs.next()) {
+				vo.setCoName(rs.getString(1));
+				vo.setCoType(rs.getString(2));
+				vo.setCoScale(rs.getString(3));
+				vo.setCoYear(rs.getString(4));
+				vo.setCoSales(rs.getString(5));
+				vo.setCoLink(rs.getString(6));
+				vo.setCoWorkers(rs.getInt(7));
+			}
+			rs.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			disConnection();
+		}
+
+		return vo;
 	}
 }

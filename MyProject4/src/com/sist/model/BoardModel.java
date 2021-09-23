@@ -39,13 +39,19 @@ public class BoardModel {
 
 		int boardCount = dao.selectBoardCount(search);
 		if(boardCount > 0) {
+			int maxPage = ((boardCount-1) / recordsPerPage) + 1;
+			if(page_ < 1) {
+				page_ = 1;
+			}else if(page_ > maxPage) {
+				page_ = maxPage;
+			}
+			
 			int min = 1+(recordsPerPage*(page_-1));
 			int max = recordsPerPage*page_;
 
 			List<BoardVO> boardList = dao.selectBoardList(search, min, max);
 			request.setAttribute("boardList", boardList);
 
-			int maxPage = ((boardCount-1) / recordsPerPage) + 1;
 			int pageSize_ = pageSize / 2;
 			int minPage_ = page_ - pageSize_;
 			int maxPage_ = page_ + pageSize_;
@@ -79,7 +85,8 @@ public class BoardModel {
 		BoardVO vo;
 		if (idx == null) {
 			vo = new BoardVO();
-			vo.setWriter("nickname");
+			String id = (String)request.getSession().getAttribute("id");
+			vo.setWriter(id);
 		} else {
 			vo = dao.selectBoard(Integer.parseInt(idx));
 		}
@@ -91,7 +98,7 @@ public class BoardModel {
 	}
 
 	@RequestMapping("board/viewCount.do")
-	public String viewCount(HttpServletRequest request, HttpServletResponse response) {
+	public String boardViewCount(HttpServletRequest request, HttpServletResponse response) {
 		BoardDAO dao = BoardDAO.getInstance();
 
 		String idx = request.getParameter("idx");
@@ -105,7 +112,7 @@ public class BoardModel {
 	}
 
 	@RequestMapping("board/view.do")
-	public String viewMain(HttpServletRequest request, HttpServletResponse response) {
+	public String boardView(HttpServletRequest request, HttpServletResponse response) {
 		BoardDAO dao = BoardDAO.getInstance();
 
 		String idx = request.getParameter("idx");

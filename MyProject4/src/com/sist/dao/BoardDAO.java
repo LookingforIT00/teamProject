@@ -73,8 +73,8 @@ public class BoardDAO {
 		try {
 			getConnection();
 			
-			String sql = "SELECT idx, title, content, writer, view_count, insert_time, update_time "
-			+ "FROM board "
+			String sql = "select idx, title, content, writer, view_count, insert_time, update_time "
+			+ "from board "
 			+ "where idx=?";
 			ps = conn.prepareStatement(sql);
 			ps.setInt(1, idx);
@@ -223,5 +223,28 @@ public class BoardDAO {
 		} finally {
 			disConnection();
 		}
+	}
+
+	public String selectMemberName(String id) {
+		String name = "Null";
+		try {
+			getConnection();
+			
+			String sql = "SELECT name "
+			+ "FROM member "
+			+ "where id=?";
+			ps = conn.prepareStatement(sql);
+			ps.setString(1, id);
+			ResultSet rs = ps.executeQuery();
+			if (rs.next()) {
+				name = rs.getString(1);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			disConnection();
+		}
+		
+		return name;
 	}
 }

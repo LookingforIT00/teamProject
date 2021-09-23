@@ -150,12 +150,12 @@ public class JsoupManager {
 							}
 							vo.setReception(reception.text());
 							vo.setCoName(coName.text());
-							vo.setJob_type(jobType);
+							vo.setJobType(jobType);
 							vo.setPersonnel(personnel.text());
 							String per = personnel.text();
 							per = per.substring(0, per.indexOf("입사"));
 							vo.setPersonnel(per);
-							vo.setWork_place(workPlace.text());
+							vo.setWorkPlace(workPlace.text());
 							dao.insertJob(vo);
 							System.out.println(vo.getJobName());
 							System.out.println(vo.getEdu());
@@ -171,9 +171,9 @@ public class JsoupManager {
 							System.out.println(vo.getDeadline());
 							System.out.println(vo.getReception());
 							System.out.println(vo.getCoName());
-							System.out.println(vo.getJob_type());
+							System.out.println(vo.getJobType());
 							System.out.println(vo.getPersonnel());
-							System.out.println(vo.getWork_place());
+							System.out.println(vo.getWorkPlace());
 							System.out.println("================================================");
 							Thread.sleep(500);
 						}

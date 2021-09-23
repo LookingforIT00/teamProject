@@ -22,13 +22,9 @@
 						<div class="card-content">
 							<form id="form" class="form-horizontal" action="<%=request.getContextPath()%>/board/register.do"
 								method="post" onsubmit="return registerBoard(this)">
-								<c:choose>
-							  		<c:when test="${vo.idx > 0}">
+								<c:if test="${vo.idx > 0}">
 									<input type="hidden" name="idx" value="${vo.idx}" />
-									</c:when>
-								  	<c:otherwise>
-									</c:otherwise>
-								</c:choose>
+								</c:if>
 					
 								<div class="form-group">
 									<label for="title" class="col-sm-2 control-label">제목</label>
@@ -56,7 +52,7 @@
 									</div>
 								</div>
 					
-								<div id="btnDiv" class="text-center" style="margin-top:20px">
+								<div class="text-center" style="margin-top:20px">
 									<button type="button"
 										class="btn btn-default"
 										onclick="backwardBoard()">뒤로가기</button>
