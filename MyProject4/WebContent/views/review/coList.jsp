@@ -25,21 +25,25 @@
       	<c:forEach var="vo" items="${reviewList }">
 		<table class="table">
 				<tr>
-					<th colspan="2"><a href="#">${vo.coporate_nm }</a></th>
+					<th colspan="2"><a href="<%=request.getContextPath()%>/review/detail.do?idk=${vo.idk }">${vo.coporate_nm }</a></th>
 				</tr>
 				<tr>
+				  
 					<th width=10%>평점</th>
-					<!--<td><span style="color:orange">${vo.score }</span></td>-->
-					<td>
-						<c:choose>
-					 	<c:when test="${vo.score eq 1}">★☆☆☆☆</c:when>
-					 	<c:when test="${vo.score eq 2 }">★★☆☆☆</c:when>
-					 	<c:when test="${vo.score eq 3 }">★★★☆☆</c:when>
-					 	<c:when test="${vo.score eq 4 }">★★★★☆</c:when>
-					 	<c:when test="${vo.score eq 5 }">★★★★★</c:when>
+					<!--<td><span style="color:orange">${cvo.score }</span></td>-->
+					<td>	
+					<c:forEach var="cvo" items="${scoreList }">
+					<c:choose>
+					 	<c:when test="${cvo eq 1}">★☆☆☆☆</c:when>
+					 	<c:when test="${cvo eq 2 }">★★☆☆☆</c:when>
+					 	<c:when test="${cvo eq 3 }">★★★☆☆</c:when>
+					 	<c:when test="${cvo eq 4 }">★★★★☆</c:when>
+					 	<c:when test="${cvo eq 5 }">★★★★★</c:when>
 					 	<c:otherwise>☆☆☆☆☆</c:otherwise>
 					 </c:choose>
+					 </c:forEach>
 					</td>
+					
 				</tr>	
 				<tr>
 					<th width=10%>한줄평</th>
