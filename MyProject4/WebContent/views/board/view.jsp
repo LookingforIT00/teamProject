@@ -21,9 +21,6 @@
 			.table > thead > tr > th:nth-child(4) {
 				width: 200px;
 			}
-			.table > tbody > tr.listInner{
-				cursor: pointer;
-			}
 		</style>
 	</head>
 	<body>
@@ -102,16 +99,18 @@
 								</div>
 							</form>
 					
-							<div class="text-center">
-								<a class="btn btn-default" href="<%=request.getContextPath()%>/board/list.do">뒤로가기</a>
-								<span>
-									<button type="button"
-										class="btn btn-primary"
-										onclick = "writeBoard(${vo.idx})">수정하기</button>
-									<button type="button"
-										class="btn btn-danger"
-										onclick = "deleteBoard(${vo.idx})">삭제하기</button>
-								</span>
+							<div class="text-center" style="margin-top:20px">
+								<a class="btn btn-default" href="javascript:void(0)" onclick="backwardBoard()">뒤로가기</a>
+								<c:if test="${not empty sessionScope.id}">
+									<span>
+										<button type="button"
+											class="btn btn-primary"
+											onclick = "writeBoard(${vo.idx})">수정하기</button>
+										<button type="button"
+											class="btn btn-danger"
+											onclick = "deleteBoard(${vo.idx})">삭제하기</button>
+									</span>
+								</c:if>
 							</div>
 						</div>
 					</div>
@@ -145,6 +144,15 @@
 			const viewScroll=(selector)=>{
 				let location = $("#"+selector).offset().top;
 				$("html").animate({scrollTop : location}, 400);
+			}
+	
+			const backwardBoard=()=>{
+				if (document.referrer.includes("write")) {
+					let uri = "<%=request.getContextPath()%>/board/list.do";
+					location.href = uri;
+				}else{
+					window.history.back();
+				}
 			}
 			
 			const writeBoard=(idx)=>{
@@ -221,6 +229,10 @@
 					content.attr("placeholder", "댓글을 입력해 주세요.");
 					content.focus();
 					return false;
+				}else if("${sessionScope.id}" === ""){
+					alert("로그인 후 가능합니다.");
+					content.val("");
+					return;
 				}
 				let uri = "<%=request.getContextPath()%>/comment/insert.do";
 				let headers = {};
@@ -229,7 +241,7 @@
 					"targetIdx=" + idx+
 					"&targetType=" + type+
 					"&content=" + content.val()+
-					"&writer=" + "nickname";
+					"&writer=" + "${sessionScope.id}";
 	
 				$.ajax({
 					url : uri,
@@ -333,7 +345,7 @@
 			}
 	
 			const getComment=(parent, comment, depth)=>{
-				let auth = (comment.deleteCheck === "N");
+				let auth = (comment.deleteCheck === "N") && ("${sessionScope.id}" === comment.writer);
 				let commentHtml = "";
 				if(depth >= 1){
 					if(auth){
@@ -361,7 +373,7 @@
 				if(auth){
 					commentHtml += `<button type="button" onclick = "openModal('`+comment.idx+`', '`+comment.writer+`', '`+comment.content+`')" class="btn btn-primary" style="width:50px; height:25px; position:absolute; right:15px; top:70px; padding:0px">수정</button>`;
 				}
-				if(comment.deleteCheck === "N"){
+				if("${sessionScope.id}" != "" && comment.deleteCheck === "N"){
 					commentHtml += `<button type="button" onclick = "openInput(`+comment.idx+`)" class="btn btn-success" style="width:50px; height:25px; position:absolute; right:15px; top:38px; padding:0px">답글</button>`;
 				}
 				commentHtml += "</li>";

@@ -101,18 +101,18 @@
 				border: solid 0.5px;
 				overflow: auto
 			}
-			#category ul {
+			#category > div ul {
 				list-style: none;
 				padding-left: 0px;
 				height: 300px;
 			}
-			#category li {
+			#category > div li {
 				border-bottom: solid;
 				border-width: 0.5;
 				cursor: pointer;
 				font-size: 30px;
 			}
-			#category li.active {
+			#category > div li.active {
 				font-weight: bold;
 				color: red;
 			}
@@ -130,7 +130,7 @@
 				<div class="col-xs-12">
 					<div class="box-content">
 						<div class="clearfix">
-							<form action="<%=request.getContextPath()%>/search/list.do" method="get" class="form-horizontal" style="margin:0px">
+							<form action="<%=request.getContextPath()%>/job/list.do" method="get" class="form-horizontal" style="margin:0px">
 								<div class="input-group">
 									<input type="text" id="search" class="form-control" style="height:45px" name="search" placeholder="키워드를 입력해 주세요." />
 									<input type="hidden" name="page" value="1" />
@@ -219,7 +219,6 @@
 				let month = ${month};
 				
 				let yOptions = "<select id='year' name='year' onchange='formCalendar(this.form)'>";
-				let test = 1;
 				for (let year_ = (nowYear - 10); year_ <= (nowYear + 10); year_++) {
 					if (year_ === year) {
 						yOptions += '<option value='+year_+' selected="selected">'+year_+'</option>';
@@ -245,8 +244,8 @@
 				if (Math.floor(year % 4) === 0 && Math.floor(year % 100) != 0 || Math.floor(year % 400) === 0) {
 					months[1] = 29;
 				}
-	
-				let nalsu = (year - 1) * 365 + (year - 1) / 4 - (year - 1) / 100 + (year - 1) / 400;
+
+				let nalsu = (year - 1) * 365 + Math.floor((year - 1) / 4) - Math.floor((year - 1) / 100) + Math.floor((year - 1) / 400);
 				for (let i = 0; i < (month - 1); i++) {
 					nalsu += months[i];
 				}
@@ -276,7 +275,7 @@
 				bigCalendar += "</tr></thead><tbody><tr>";
 				for (let i = 1; i <= week; i++) {
 					bigCalendar += "<td class='nan'>" + (previousMonthLastDay - week + i)
-							+ "<p style='color:black'>내용입니다.내용입니다.내용입니다.내용입니다.내용입니다.</p></td>";
+							+ "<p style='color:black'>내용입니다.</p></td>";
 				}
 				let weekCount = week;
 				for (let i = 1; i <= lastDay; i++, weekCount++) {
@@ -293,13 +292,13 @@
 					} else {
 						bigCalendar += "'>";
 					}
-					bigCalendar += i + "<p style='color:black'>내용입니다.내용입니다.내용입니다.내용입니다.내용입니다.</p></td>";
+					bigCalendar += i + "<p style='color:black'>내용입니다.</p></td>";
 					if (Math.floor(weekCount % dayOfWeek.length) === 6) {
 						bigCalendar += "</tr><tr>";
 					}
 				}
 				for (let i = 1; i <= dayOfWeek.length - weekCount; i++) {
-					bigCalendar += "<td class='nan'>" + i + "<p style='color:black'>내용입니다.내용입니다.내용입니다.내용입니다.내용입니다.</p></td>";
+					bigCalendar += "<td class='nan'>" + i + "<p style='color:black'>내용입니다.</p></td>";
 				}
 				bigCalendar += "</tr>";
 				$("#bigCalendar").html(bigCalendar);

@@ -18,9 +18,9 @@ public class JobVO {
 	private String reception;
 	private Integer hit;
 	private String coName;
-	private String job_type; // 모집직종
+	private String jobType; // 모집직종
 	private String personnel; // 모집인원
-	private String work_place; // 근무예정지
+	private String workPlace; // 근무예정지
 	
 	public Integer getIdx() {
 		return idx;
@@ -118,11 +118,11 @@ public class JobVO {
 	public void setCoName(String coName) {
 		this.coName = coName;
 	}
-	public String getJob_type() {
-		return job_type;
+	public String getJobType() {
+		return jobType;
 	}
-	public void setJob_type(String job_type) {
-		this.job_type = job_type;
+	public void setJobType(String jobType) {
+		this.jobType = jobType;
 	}
 	public String getPersonnel() {
 		return personnel;
@@ -130,10 +130,10 @@ public class JobVO {
 	public void setPersonnel(String personnel) {
 		this.personnel = personnel;
 	}
-	public String getWork_place() {
-		return work_place;
+	public String getWorkPlace() {
+		return workPlace;
 	}
-	public void setWork_place(String work_place) {
-		this.work_place = work_place;
+	public void setWorkPlace(String workPlace) {
+		this.workPlace = workPlace;
 	}
 }
